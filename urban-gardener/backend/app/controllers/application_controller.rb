@@ -6,13 +6,13 @@ class ApplicationController < ActionController::API
 
   def issue_token(user)
   # user.id
-    token = JWT.encode({id: user.id}, 'secret', 'HS256')
+    token = JWT.encode({id: user.id}, ENV['secret_key_base'], 'HS256')
     # your secret should be in another file that is .gitignore'd, use a gem like 'figaro' to manage
   end
 
   def token
     begin
-      JWT.decode(request.headers['Authorization'], 'secret', true, { :algorithm => 'HS256' })
+      JWT.decode(request.headers['Authorization'], ENV['secret_key_base'], true, { :algorithm => 'HS256' })
     rescue JWT::DecodeError
       [{}]
     end

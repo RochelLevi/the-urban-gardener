@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20180131140615) do
   end
 
   create_table "listings", force: :cascade do |t|
+    t.text "title"
     t.text "img_url"
     t.text "street_address"
     t.text "zip"
@@ -30,7 +31,7 @@ ActiveRecord::Schema.define(version: 20180131140615) do
     t.text "desired_garden_type"
     t.text "compensation_type"
     t.integer "dollar_compensation_amount"
-    t.integer "percentage_compersation_amount"
+    t.integer "percentage_compensation_amount"
     t.integer "user_id"
     t.text "description"
     t.datetime "created_at", null: false

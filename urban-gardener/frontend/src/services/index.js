@@ -33,10 +33,24 @@ const register = data => {
 };
 
 const createListing = data => {
+  const token = localStorage.getItem('token');
+  console.log('in adapter', data)
   return fetch(`${API_ROOT}/listings/`, {
     method: 'POST',
-    headers,
+    headers: {
+      'Content-Type': 'application/json',
+      Accepts: 'application/json',
+      Authorization: token
+    },
     body: JSON.stringify(data)
+  }).then(res => res.json());
+};
+
+const deleteListing = id => {
+  const token = localStorage.getItem('token');
+  return fetch(`${API_ROOT}/listings/${id}`, {
+    method: 'DELETE',
+    headers: { Authorization: token }
   }).then(res => res.json());
 };
 
@@ -46,5 +60,6 @@ export const adapter = {
     getCurrentUser,
   },
   register,
-  createListing
+  createListing,
+  deleteListing
 };

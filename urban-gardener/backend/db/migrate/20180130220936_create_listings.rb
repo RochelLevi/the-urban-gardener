@@ -1,6 +1,7 @@
 class CreateListings < ActiveRecord::Migration[5.1]
   def change
     create_table :listings do |t|
+      t.text :title
       t.text :img_url
       t.text :street_address
       t.text :zip
@@ -8,7 +9,7 @@ class CreateListings < ActiveRecord::Migration[5.1]
       t.text :desired_garden_type
       t.text :compensation_type
       t.integer :dollar_compensation_amount
-      t.integer :percentage_compersation_amount
+      t.integer :percentage_compensation_amount
       t.integer :user_id
       t.text :description
 

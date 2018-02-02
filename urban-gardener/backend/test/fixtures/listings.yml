@@ -8,7 +8,7 @@ one:
   desired_garden_type: MyText
   compensation_type: MyText
   dollar_compensation_amount: 1
-  percentage_compersation_amount: 1
+  percentage_compensation_amount: 1
   user_id: 1
   description: MyText
 
@@ -20,6 +20,6 @@ two:
   desired_garden_type: MyText
   compensation_type: MyText
   dollar_compensation_amount: 1
-  percentage_compersation_amount: 1
+  percentage_compensation_amount: 1
   user_id: 1
   description: MyText

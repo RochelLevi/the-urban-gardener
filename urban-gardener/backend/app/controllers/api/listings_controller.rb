@@ -41,6 +41,7 @@ class Api::ListingsController < ApplicationController
 
     if @listing
       @listing.destroy
+      render json: {}, status: 200
     else
       render json: {errors: "listing not found"}, status: 422
     end
@@ -48,7 +49,8 @@ class Api::ListingsController < ApplicationController
 
   private
   def listing_params
-    params.permit(:avatar, :img_url, :street_address, :zip, :sunlight_amount, :desired_garden_type, :compensation_type, :dollar_compensation_amount, :percentage_compersation_amount, :user_id, :description)
+    params.require(:listing).permit(:user_id, :title, :avatar_file_name, :avatar_content_type, :avatar_file_size, :street_address, :zip, :sunlight_amount, :desired_garden_type, :compensation_type, :dollar_compensation_amount, :percentage_compensation_amount, :user_id, :description)
+
   end
 
 end

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       resources :messages
     end
     resources :users, only: [:create, :show]
-    resources :listings, only: [:index, :show, :destroy]
+    resources :listings, only: [:index, :show, :destroy, :create]
     post '/login', to: 'auth#create'
     get '/current_user', to: 'auth#show'
   end

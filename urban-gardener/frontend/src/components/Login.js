@@ -5,6 +5,7 @@ import * as actions from '../actions';
 import '../css/stylesheet.css'
 
 
+
 class Login extends React.Component {
 
   constructor() {
@@ -61,7 +62,7 @@ class Login extends React.Component {
 
             <div class="field">
               <div class="ui left icon input">
-                <i class="user icon"></i>
+                <i class="mail icon"></i>
                 <input onChange={this.handleChange} type="text" name="email" placeholder="E-mail" value={this.state.fields.username}/>
               </div>
             </div>
