@@ -14,7 +14,7 @@ const ProfileUserListings = (props) => {
           <div class="item">
             <i class="large tag middle aligned icon"></i>
             <div class="content">
-              <a class="header">{l.title}</a>
+              <a href={`./listings/${l.id}`} class="header">{l.title}</a>
               <div class="description">{l.description}</div>
                 <button class="ui mini black button" onClick={() => handleDelete(l.id)}><i class="trash icon"></i>Delete Listing</button>
             </div>

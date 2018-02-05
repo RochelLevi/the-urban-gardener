@@ -16,6 +16,10 @@ const getCurrentUser = () => {
   return getWithToken(`${API_ROOT}/current_user`);
 };
 
+const getListings = () => {
+  return getWithToken(`${API_ROOT}/listings`);
+};
+
 const login = data => {
   return fetch(`${API_ROOT}/login/`, {
     method: 'POST',
@@ -61,5 +65,6 @@ export const adapter = {
   },
   register,
   createListing,
-  deleteListing
+  deleteListing,
+  getListings
 };

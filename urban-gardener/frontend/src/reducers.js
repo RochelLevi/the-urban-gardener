@@ -12,6 +12,16 @@ const authReducer = (state = {currentUser: {}}, action) => {
   }
 };
 
+const listingsReducer = (state = [], action) => {
+  console.log(action)
+  switch (action.type) {
+    case 'GET_LISTINGS':
+      return action.payload ;
+    default:
+      return state;
+  }
+};
+
 const userReducer = (state = {listings: [], conversations: []}, action) => {
   switch (action.type) {
     case 'SET_CURRENT_USER':
@@ -97,6 +107,7 @@ const rootReducer = combineReducers({
   loginError: loginErrorReducer,
   registerError: registerErrorReducer,
   listingError: listingErrorReducer,
+  listings: listingsReducer
   // paintings: paintingsReducer,
   // activePaintingId: activePaintingIdReducer,
 });
