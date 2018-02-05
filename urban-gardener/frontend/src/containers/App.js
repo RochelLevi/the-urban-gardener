@@ -8,7 +8,7 @@ import Login from '../components/Login'
 import ListingsSearchContainer from '../components/ListingsSearchContainer'
 import MailBoxContainer from '../components/MailBoxContainer'
 import Profile from '../components/Profile'
-
+import ListingShow from '../components/ListingShow'
 
 class App extends Component {
 
@@ -25,6 +25,7 @@ class App extends Component {
             <Route exact path="/register" component={Register}/>
             <Route exact path="/messages" component={MailBoxContainer}/>
             <Route exact path="/search-listings" component={ListingsSearchContainer}/>
+            <Route exact path="/listings/:id" component={ListingShow}/>
           </div>
         </div>
       )

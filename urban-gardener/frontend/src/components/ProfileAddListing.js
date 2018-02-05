@@ -23,33 +23,38 @@ class ProfileAddListing extends React.Component{
       percentage_compensation_amount: '',
       description: '',
       avatar_file_name: '',
-      avatar_content_type: '',
-      avatar_file_size: ''
+      avatar: '',
+      img_url: ''
     }
   }
 
   componentDidMount(){
-    this.setState({user_id: this.props.user.id})
+    this.setState({user_id: this.props.user.id, avatar_updated_at: Date.now()})
   }
 
   handleChange = (event) => {
-
     const field = event.target.name
     const value = event.target.value
-    console.log(field, value)
     this.setState({[field]: value})
   }
 
 
-  onDrop = (picture) => {
-        this.setState({
-            avatar_file_name: picture[0].name,
-            avatar_file_size: picture[0].size,
-            avatar_content_type: picture[0].type,
-        });
+  onDrop = (e) => {
+   var file = this.refs.file.files[0];
+   var reader = new FileReader();
+   var url = reader.readAsDataURL(file);
+   const file_name = e.target.files[0].name
+   reader.onloadend = (e) => {
+     this.setState({
+        avatar_file_name: file_name,
+         avatar: reader.result,
+         img_url: reader.result
+     })
+   }
   }
 
   handleSubmit = (e) => {
+    console.log(this.state.avatar)
     e.preventDefault()
     this.props.createListing(this.state, this.props.history)
     this.setState({
@@ -65,29 +70,23 @@ class ProfileAddListing extends React.Component{
       description: '',
       avatar_file_name: '',
       avatar_content_type: '',
-      avatar_file_size: ''
+      avatar_file_size: '',
+      avatar: '',
+      img_url: ''
     })
   }
-
-
 
   render(){
     return (
 
         <div className='ui segment'>
           <h4> Add a Listing </h4>
-
             <Form>
               <Form.Input required fluid value={this.state.title} name='title' label='Title' placeholder='Listing title' onChange={this.handleChange}/>
               <Form.Group>
                 <Form.Input required value={this.state.street_address} name='street_address' label='Street Address' placeholder='Street Address' width={10} onChange={this.handleChange}/>
-                <Form.Input required value={this.state.zip} name='zip' label='Zip Code' placeholder='Zip Code' width={6} onChange={this.handleChange}/>
+                <Form.Input required value={this.state.zip} name='zip' label='Zip Code' placeholder='Zip Code' maxlength="5" width={6} onChange={this.handleChange}/>
               </Form.Group>
-              {// <Form.Field>
-              //   <label for="image_uploads">Choose images to upload (PNG, JPG)</label>
-              //   <input type="file" id="listing_pic" name="listing_pic" accept=".jpg, .jpeg, .png" onChange={this.handleChange}/>
-              // </Form.Field>
-            }
 
               <br/>
 
@@ -195,18 +194,19 @@ class ProfileAddListing extends React.Component{
                 <Form.Input required value={this.state.percentage_compensation_amount} name='percentage_compensation_amount' label='Percentage of Crops Compensation Amount' placeholder='%%%%' onChange={this.handleChange}/>
               </Form.Group>
               <Form.TextArea required value={this.state.description} name='description' label='Description' placeholder='Tell us more about your property...' onChange={this.handleChange}/>
-                <Form.Field>
-                  <label for="image_uploads">Choose images to upload (PNG, JPG)</label>
-                    <ImageUploader
-                      withIcon={true}
-                      buttonText='Choose image'
-                      onChange={this.onDrop}
-                      imgExtension={['.jpg', '.png']}
-                      maxFileSize={5242880}
-                      buttonClassName='ui mini black button'
-                      label=''
-                      />
-                </Form.Field>
+
+              <label for="image_uploads">Choose images to upload (PNG, JPG)</label>
+              <input ref='file' type='file' onChange={this.onDrop}/>
+
+              <br/>
+              <br/>
+
+              <label for="image_uploads">Or add a URL</label>
+              <input type='text' name='img_url' value={this.state.img_url} onChange={this.handleChange}/>
+
+              <br/>
+              <br/>
+
               <Form.Button color='black' onClick={this.handleSubmit}>Submit</Form.Button>
             </Form>
 

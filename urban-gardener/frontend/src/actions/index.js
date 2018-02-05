@@ -1,12 +1,19 @@
 import { adapter } from '../services';
 import {ASYNC_START, SET_CURRENT_USER, LOGOUT_USER, SET_LOGIN_ERROR, REGISTER_NEW_USER,
     SET_REGISTER_ERROR_TRUE, SET_REGISTER_ERROR_FALSE, DELETE_LISTING, SET_CREATE_LISTING_ERROR_TRUE,
-    ADD_LISTING_TO_USER} from './types';
+    ADD_LISTING_TO_USER, GET_LISTINGS} from './types';
 
 export const fetchUser = () => dispatch => {
   dispatch({ type: ASYNC_START });
   adapter.auth.getCurrentUser().then(user => {
     dispatch({ type: SET_CURRENT_USER, payload: user });
+  });
+};
+
+export const fetchListings = () => dispatch => {
+  dispatch({ type: ASYNC_START });
+  adapter.getListings().then(listings => {
+    dispatch({ type: GET_LISTINGS, payload: listings });
   });
 };
 

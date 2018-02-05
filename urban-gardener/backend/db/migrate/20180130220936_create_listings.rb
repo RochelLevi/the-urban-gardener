@@ -2,7 +2,8 @@ class CreateListings < ActiveRecord::Migration[5.1]
   def change
     create_table :listings do |t|
       t.text :title
-      t.text :img_url
+      t.binary :img_url_1, limit: 3.megabytes
+      t.binary :img_url_2, limit: 3.megabytes
       t.text :street_address
       t.text :zip
       t.text :sunlight_amount

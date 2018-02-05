@@ -49,7 +49,7 @@ class Api::ListingsController < ApplicationController
 
   private
   def listing_params
-    params.require(:listing).permit(:user_id, :title, :avatar_file_name, :avatar_content_type, :avatar_file_size, :street_address, :zip, :sunlight_amount, :desired_garden_type, :compensation_type, :dollar_compensation_amount, :percentage_compensation_amount, :user_id, :description)
+    params.require(:listing).permit(:img_url, :avatar, :user_id, :title, :avatar_updated_at, :avatar_file_name, :avatar_content_type, :avatar_file_size, :street_address, :zip, :sunlight_amount, :desired_garden_type, :compensation_type, :dollar_compensation_amount, :percentage_compensation_amount, :user_id, :description)
 
   end
 

@@ -9,7 +9,7 @@ import ProfileAddListing from './ProfileAddListing'
 
 
 const Profile =  (props) => {
-
+  console.log(props)
     return (
       <div className="ui container">
         <h3> Welcome, {props.user.username}</h3>
@@ -23,7 +23,7 @@ const Profile =  (props) => {
 }
 
 const mapStateToProps = (state) => {
-  return {user: state.user}
+  return {user: state.user, listings: state.listings}
 }
 
 export default withAuth(connect(mapStateToProps, null)(Profile))
