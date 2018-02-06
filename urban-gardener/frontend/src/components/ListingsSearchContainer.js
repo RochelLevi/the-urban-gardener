@@ -63,8 +63,10 @@ class ListingsSearchContainer extends React.Component{
   // }
 
   componentDidMount(){
+    console.log('mounting')
     const userOrigin = `${this.props.user.street_address}, ${this.props.user.zip}`
     const filterOrigin = this.props.filters.location ? this.props.filters.location : `${this.props.user.street_address}, ${this.props.user.zip}`
+    console.log(userOrigin)
     this.addDistanceToListings(this.props.listings, userOrigin, false)
     this.addDistanceToListings(this.props.filteredListings.listings, filterOrigin, true, this.props.filters)
   }
@@ -72,7 +74,7 @@ class ListingsSearchContainer extends React.Component{
 
 
   render(){
-
+    console.log(this.props.listings)
     const listingCards = this.props.filteredListings.filtered ?
     this.props.filteredListings.listings.map(listing => <ListingCard listing={listing}/>) :
     this.props.listings.map(listing => <ListingCard listing={listing}/>)

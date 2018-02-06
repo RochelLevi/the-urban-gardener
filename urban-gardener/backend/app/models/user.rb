@@ -15,10 +15,10 @@ class User < ApplicationRecord
   def conversations
     Conversation.all.select do |c|
       c.sender_id == self.id || c.recipient_id == self.id
+    end.map do |c|
+      {id: c.id, sender_id: c.sender_id, recipient_id: c.recipient_id, messages: c.messages_cust,
+      sender_name: User.find(c.sender_id).username, recipient_name: User.find(c.recipient_id).username}
     end
-    # .map do |message|
-    #   {id: message.id, body: message.body, conversation_id: message.conversation_id, user_id: message.user_id, read: message.read, message_time: message.message_time}
-    # end
   end
 
 

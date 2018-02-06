@@ -34,6 +34,10 @@ const userReducer = (state = {listings: [], conversations: []}, action) => {
       const newListings = state.listings.slice()
       newListings.push(action.listing)
       return Object.assign({}, state, {listings: newListings});
+    case 'ADD_MESSAGE_TO_USER':
+      const newConversations = state.conversations.slice()
+      newConversations.forEach(c => c.id === action.message.conversation_id ? c.messages.push(action.message) : null)
+      return Object.assign({}, state, {conversations: newConversations});
     default:
       return state;
   }

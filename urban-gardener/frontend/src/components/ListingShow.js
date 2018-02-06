@@ -11,8 +11,18 @@ class ListingShow extends React.Component {
     super()
 
     this.state = {
-      currListing: {}
+      currListing: {},
+      message: ''
     }
+  }
+
+  handleChange = (e) => {
+    this.setState({message: e.target.value})
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault()
+    this.props.createMessage({body: this.state.message, user_id: this.props.user.id, sender_id: this.props.user.id, recipient_id: this.state.currListing.user_id})
   }
 
   getListingId(){
@@ -28,7 +38,6 @@ class ListingShow extends React.Component {
   }
 
   render(){
-
     return(
 
       <div class="ui container">
@@ -102,9 +111,8 @@ class ListingShow extends React.Component {
           <div className='ui segment'>
             <h4>Message Seller</h4>
             <Form>
-              <Form.Input label='Subject' type='text' />
-              <Form.TextArea label='Message' placeholder='Please enter your message' />
-              <Form.Button>Submit</Form.Button>
+              <Form.TextArea label='Message' value={this.state.message} onChange={this.handleChange} placeholder='Please enter your message' />
+              <Form.Button color='black' onClick={this.handleSubmit}>Send</Form.Button>
             </Form>
           </div>
 
@@ -116,7 +124,7 @@ class ListingShow extends React.Component {
 
 
 const mapStateToProps = (state) => {
-  return {listings: state.listings}
+  return {listings: state.listings, user: state.user}
 }
 
 export default withRouter(withAuth(connect(mapStateToProps, null)(ListingShow)))

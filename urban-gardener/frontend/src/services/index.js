@@ -38,8 +38,20 @@ const register = data => {
 
 const createListing = data => {
   const token = localStorage.getItem('token');
-  console.log('in adapter', data)
   return fetch(`${API_ROOT}/listings/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accepts: 'application/json',
+      Authorization: token
+    },
+    body: JSON.stringify(data)
+  }).then(res => res.json());
+};
+
+const createMessage = data => {
+  const token = localStorage.getItem('token');
+  return fetch(`${API_ROOT}/messages/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -66,5 +78,6 @@ export const adapter = {
   register,
   createListing,
   deleteListing,
-  getListings
+  getListings,
+  createMessage
 };

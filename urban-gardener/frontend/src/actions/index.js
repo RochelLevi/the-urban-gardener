@@ -2,11 +2,12 @@ import { adapter } from '../services';
 import {ASYNC_START, SET_CURRENT_USER, LOGOUT_USER, SET_LOGIN_ERROR, REGISTER_NEW_USER,
     SET_REGISTER_ERROR_TRUE, SET_REGISTER_ERROR_FALSE, DELETE_LISTING, SET_CREATE_LISTING_ERROR_TRUE,
     ADD_LISTING_TO_USER, GET_LISTINGS, CHANGE_LISTING_FILTER, FILTER_LISTINGS,
-    UPDATE_FILTERED_LISTINGS_WITH_LOCATION} from './types';
+    UPDATE_FILTERED_LISTINGS_WITH_LOCATION, ADD_MESSAGE_TO_USER} from './types';
 
 export const fetchUser = () => dispatch => {
   dispatch({ type: ASYNC_START });
   adapter.auth.getCurrentUser().then(user => {
+    console.log('user', user)
     dispatch({ type: SET_CURRENT_USER, payload: user });
   });
 };
@@ -23,7 +24,7 @@ export const updateListingsWithDistance = (listings, filtered, filters) => dispa
   if(filtered){
     // dispatch({ type: UPDATE_FILTERED_LISTINGS_WITH_LOCATION, payload: listings });
     dispatch({ type: FILTER_LISTINGS, listings: listings, filters: filters});
-  }else{
+  } else{
     dispatch({ type: GET_LISTINGS, payload: listings });
   }
 };
@@ -73,12 +74,22 @@ export const registerUser = (data, history) => dispatch => {
 
 export const createListing = (data, history) => dispatch => {
   dispatch({ type: ASYNC_START });
-  console.log('in actions', data)
   adapter.createListing(data).then(listing => {
     if (listing.errors){
       dispatch({ type: SET_CREATE_LISTING_ERROR_TRUE, errors: listing.errors })
     } else{
       dispatch({ type: ADD_LISTING_TO_USER, listing: listing });
+    }
+  });
+};
+
+export const createMessage = (data) => dispatch => {
+  dispatch({ type: ASYNC_START });
+  adapter.createMessage(data).then(message => {
+    if (message.errors){
+      // dispatch({ type: SET_CREATE_LISTING_ERROR_TRUE, errors: listing.errors })
+    } else{
+      dispatch({ type: ADD_MESSAGE_TO_USER, message: message });
     }
   });
 };

@@ -3,9 +3,7 @@ Rails.application.routes.draw do
 
 
   namespace :api do
-    resources :conversations do
-      resources :messages
-    end
+    resources :messages, only: [:create]
     resources :users, only: [:create, :show]
     resources :listings, only: [:index, :show, :destroy, :create]
     post '/login', to: 'auth#create'
