@@ -1,7 +1,8 @@
 import { adapter } from '../services';
 import {ASYNC_START, SET_CURRENT_USER, LOGOUT_USER, SET_LOGIN_ERROR, REGISTER_NEW_USER,
     SET_REGISTER_ERROR_TRUE, SET_REGISTER_ERROR_FALSE, DELETE_LISTING, SET_CREATE_LISTING_ERROR_TRUE,
-    ADD_LISTING_TO_USER, GET_LISTINGS} from './types';
+    ADD_LISTING_TO_USER, GET_LISTINGS, CHANGE_LISTING_FILTER, FILTER_LISTINGS,
+    UPDATE_FILTERED_LISTINGS_WITH_LOCATION} from './types';
 
 export const fetchUser = () => dispatch => {
   dispatch({ type: ASYNC_START });
@@ -16,6 +17,24 @@ export const fetchListings = () => dispatch => {
     dispatch({ type: GET_LISTINGS, payload: listings });
   });
 };
+
+export const updateListingsWithDistance = (listings, filtered, filters) => dispatch => {
+  dispatch({ type: ASYNC_START });
+  if(filtered){
+    // dispatch({ type: UPDATE_FILTERED_LISTINGS_WITH_LOCATION, payload: listings });
+    dispatch({ type: FILTER_LISTINGS, listings: listings, filters: filters});
+  }else{
+    dispatch({ type: GET_LISTINGS, payload: listings });
+  }
+};
+
+export const changeListingsFilter = (filters) => dispatch => {
+  dispatch({ type: CHANGE_LISTING_FILTER, filter: filters });
+};
+
+// export const filterListings = (listings, filters) => dispatch => {
+//   dispatch({ type: FILTER_LISTINGS, listings: listings, filters: filters});
+// };
 
 export const deleteListing = (id) => dispatch => {
   dispatch({ type: ASYNC_START });

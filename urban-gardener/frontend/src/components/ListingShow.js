@@ -3,7 +3,7 @@ import '../css/stylesheet.css'
 import withAuth from '../hocs/withAuth';
 import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux'
-import { Form } from 'semantic-ui-react'
+import { Form, Image } from 'semantic-ui-react'
 
 class ListingShow extends React.Component {
 
@@ -21,14 +21,14 @@ class ListingShow extends React.Component {
   }
 
   componentDidMount(){
-    console.log(this.props.listings)
+
     const listingId = this.getListingId()
     const currListing = this.props.listings.filter(l => l.id === parseInt(listingId))[0]
     this.setState({currListing})
   }
 
   render(){
-    console.log(this.state)
+
     return(
 
       <div class="ui container">
@@ -37,12 +37,18 @@ class ListingShow extends React.Component {
 
         <br/>
 
+
+
         <div class="ui horizontal segments">
           <div class="ui segment">
-              <img src={this.state.currListing.img_url_1} height='100%' width="100%"></img>
+            {  // <img src={this.state.currListing.img_url_1} height='100%' width="100%"></img>
+            }
+              <Image src={this.state.currListing.img_url_1} size='large'/>
           </div>
           <div class="ui segment">
-            <img src={this.state.currListing.img_url_2} height='100%' width="100%"></img>
+            {// <img src={this.state.currListing.img_url_2} height='100%' width="100%"></img>
+            }
+            <Image src={this.state.currListing.img_url_2} size='large'/>
           </div>
         </div>
 

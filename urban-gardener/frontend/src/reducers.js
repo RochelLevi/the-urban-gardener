@@ -13,7 +13,6 @@ const authReducer = (state = {currentUser: {}}, action) => {
 };
 
 const listingsReducer = (state = [], action) => {
-  console.log(action)
   switch (action.type) {
     case 'GET_LISTINGS':
       return action.payload ;
@@ -74,32 +73,38 @@ const registerErrorReducer = (state = {isError: false, errors: []}, action) => {
 };
 
 
-// const listingsReducer = (state = [], action) => {
-//   switch (action.type) {
-//     case FETCH_PAINTINGS:
-//       return [...action.payload];
-//     case DELETE_PAINTING:
-//       return state.filter(painting => painting.id !== action.id);
-//     case FILTER_BY_MUSEUM:
-//       return state.filter(painting => painting.museum.name === 'National Gallery of Art, Washington D.C.');
-//     default:
-//       return state;
-//   }
-// };
+const listingsFiltersReducer = (state = {}, action) => {
+  switch (action.type) {
+    case 'CHANGE_LISTING_FILTER':
+      return Object.assign({}, state, action.filter);
+    default:
+      return state;
+  }
+};
 
-// const activeListingIdReducer = (state = null, action) => {
-//   switch (action.type) {
-    // case SELECT_ACTIVE_PAINTING:
-    //   return action.id;
-    // case DELETE_PAINTING:
-    //   return 1;
-    // case FETCH_PAINTINGS:
-    //   const index = Math.floor(Math.random() * action.payload.length)
-    //   return action.payload[index].id;
-//     default:
-//       return state;
-//   }
-// };
+function filteredListings(listings, filters){
+  return listings.filter( (l) => {
+    console.log(l.distance_value * 0.000621371)
+    console.log(filters.distance_miles)
+    return (
+      (filters.garden_type ? l.desired_garden_type === filters.garden_type : true) &&
+      (filters.compensation_type ? l.compensation_type === filters.compensation_type : true) &&
+      (filters.location && filters.distance_miles ? parseFloat(parseFloat(l.distance_value) * 0.000621371 )< parseFloat(filters.distance_miles) : true)
+  )}
+)}
+
+//think about resetting this
+const filteredListingsReducer = (state = {listings: [], filtered: false}, action) => {
+  switch (action.type) {
+    case 'FILTER_LISTINGS':
+      return {listings: filteredListings(action.listings, action.filters), filtered: true}
+    // case 'UPDATE_FILTERED_LISTINGS_WITH_LOCATION':
+    //   return {listings: action.payload, filtered: true}
+    default:
+      return state;
+  }
+};
+
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -107,7 +112,9 @@ const rootReducer = combineReducers({
   loginError: loginErrorReducer,
   registerError: registerErrorReducer,
   listingError: listingErrorReducer,
-  listings: listingsReducer
+  listings: listingsReducer,
+  listingsFilters: listingsFiltersReducer,
+  filteredListings: filteredListingsReducer
   // paintings: paintingsReducer,
   // activePaintingId: activePaintingIdReducer,
 });

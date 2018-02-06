@@ -9,7 +9,7 @@ import ProfileAddListing from './ProfileAddListing'
 
 
 const Profile =  (props) => {
-  console.log(props)
+
     return (
       <div className="ui container">
         <h3> Welcome, {props.user.username}</h3>

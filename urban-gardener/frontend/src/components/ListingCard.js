@@ -3,27 +3,41 @@ import '../css/stylesheet.css'
 import {connect} from 'react-redux'
 
 
-const ListingCard = (props) => {
+class ListingCard extends React.Component{
 
+  constructor(){
+    super()
+
+    this.state = {
+      distance_text: '',
+      distance_value: ''
+    }
+  }
+
+  componentDidMount(){
+
+  }
+
+  render(){
     return(
       <div class="card">
-        <a class="image" href={'/listings/' + props.listing.id}>
-          <img src={props.listing.img_url_1}></img>
+        <a class="image" href={'/listings/' + this.props.listing.id}>
+          <img src={this.props.listing.img_url_1}></img>
         </a>
 
         <div class="content">
 
-          <a class="header" href={'/listings/' + props.listing.id}> {props.listing.title}</a>
+          <a class="header" href={'/listings/' + this.props.listing.id}> {this.props.listing.title}</a>
 
           <div class="description">
-            {props.listing.description.slice(0, 100)}...
+            {this.props.listing.description.slice(0, 100)}...
           </div>
 
 
           <br/>
 
           <div class="meta">
-            <span> <i class="marker icon"></i> 3 Miles</span>
+            <span> <i class="marker icon"></i> {this.props.listing.distance_text} </span>
           </div>
         </div>
 
@@ -31,18 +45,23 @@ const ListingCard = (props) => {
         <div class="extra content">
           <span >
             <i class="dollar icon"></i>
-            {props.listing.dollar_compensation_amount}
+            {this.props.listing.dollar_compensation_amount}
           </span>
 
           <span class="right floated">
-            {props.listing.percentage_compensation_amount}
+            {this.props.listing.percentage_compensation_amount}
             <i class="percent icon"></i>
              of Crops
           </span>
         </div>
-    </div>
+      </div>
     )
+  }
+
 }
 
+const mapStateToProps = (state) => {
+  return {user: state.user, filters: state.listingsFilters}
+}
 
-export default ListingCard
+export default connect(mapStateToProps, null)(ListingCard)

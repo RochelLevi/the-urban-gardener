@@ -11,7 +11,7 @@ class Navbar extends Component {
 
   componentDidMount() {
     if (localStorage.getItem('token')) {
-      this.props.fetchUser();
+      this.props.fetchUser;
     } else {
       this.setState({ authCompleted: true });
     }

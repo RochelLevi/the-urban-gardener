@@ -24,7 +24,7 @@ class ProfileAddListing extends React.Component{
       description: '',
       avatar_file_name: '',
       avatar: '',
-      img_url: ''
+      img_url_1: ''
     }
   }
 
@@ -48,13 +48,12 @@ class ProfileAddListing extends React.Component{
      this.setState({
         avatar_file_name: file_name,
          avatar: reader.result,
-         img_url: reader.result
+         img_url_1: reader.result
      })
    }
   }
 
   handleSubmit = (e) => {
-    console.log(this.state.avatar)
     e.preventDefault()
     this.props.createListing(this.state, this.props.history)
     this.setState({
@@ -72,7 +71,7 @@ class ProfileAddListing extends React.Component{
       avatar_content_type: '',
       avatar_file_size: '',
       avatar: '',
-      img_url: ''
+      img_url_1: ''
     })
   }
 
@@ -202,7 +201,7 @@ class ProfileAddListing extends React.Component{
               <br/>
 
               <label for="image_uploads">Or add a URL</label>
-              <input type='text' name='img_url' value={this.state.img_url} onChange={this.handleChange}/>
+              <input type='text' name='img_url_1' value={this.state.img_url_1} onChange={this.handleChange}/>
 
               <br/>
               <br/>
