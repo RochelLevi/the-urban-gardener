@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(version: 20180131140615) do
 
   create_table "listings", force: :cascade do |t|
     t.text "title"
-    t.binary "img_url_1"
-    t.binary "img_url_2"
+    t.text "img_url_1"
+    t.text "img_url_2"
     t.text "street_address"
     t.text "zip"
     t.text "sunlight_amount"

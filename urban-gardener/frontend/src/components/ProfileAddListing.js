@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { Form } from 'semantic-ui-react'
+import { Form, Message } from 'semantic-ui-react'
 import * as actions from '../actions';
 import ImageUploader from 'react-images-upload'
 
@@ -24,7 +24,9 @@ class ProfileAddListing extends React.Component{
       description: '',
       avatar_file_name: '',
       avatar: '',
-      img_url_1: ''
+      img_url_1: '',
+
+      show_message: false
     }
   }
 
@@ -57,7 +59,6 @@ class ProfileAddListing extends React.Component{
     e.preventDefault()
     this.props.createListing(this.state, this.props.history)
     this.setState({
-      user_id: '',
       title: '',
       street_address: '',
       zip: '',
@@ -71,16 +72,19 @@ class ProfileAddListing extends React.Component{
       avatar_content_type: '',
       avatar_file_size: '',
       avatar: '',
-      img_url_1: ''
+      img_url_1: '',
+      show_message: true
     })
   }
 
   render(){
+    console.log('show message', this.state.show_message)
+    console.log('error', this.props.listingError)
     return (
 
         <div className='ui segment'>
           <h4> Add a Listing </h4>
-            <Form>
+            <Form error success>
               <Form.Input required fluid value={this.state.title} name='title' label='Title' placeholder='Listing title' onChange={this.handleChange}/>
               <Form.Group>
                 <Form.Input required value={this.state.street_address} name='street_address' label='Street Address' placeholder='Street Address' width={10} onChange={this.handleChange}/>
@@ -206,6 +210,22 @@ class ProfileAddListing extends React.Component{
               <br/>
               <br/>
 
+                {this.state.show_message && !this.props.listingError ? <Message
+                  success
+                  header='Form Completed'
+                  content="Your Listing has Been Added and Should Appear on Our Site Momentarily"
+                /> :
+                null
+                }
+
+                {this.state.show_message && this.props.listingError ?  <Message
+                  error
+                  header='Error'
+                  content="There Was an Error in Your Submission. Please Try Again"
+                /> :
+                null
+              }
+
               <Form.Button color='black' onClick={this.handleSubmit}>Submit</Form.Button>
             </Form>
 
@@ -215,7 +235,7 @@ class ProfileAddListing extends React.Component{
 }
 
 const mapStateToProps = (state) => {
-  return {user: state.user}
+  return {user: state.user, listingError: state.listingError}
 }
 
 export default connect(mapStateToProps, actions)(ProfileAddListing)
