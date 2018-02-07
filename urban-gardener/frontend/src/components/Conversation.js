@@ -20,6 +20,19 @@ class Conversation extends React.Component{
     this.setState({show: !this.state.show})
   }
 
+  handleChange = (e) => {
+    this.setState({message: e.target.value})
+  }
+
+  handleSubmit= (e) => {
+    e.preventDefault()
+    this.props.createMessage({body: this.state.message, user_id: this.props.user.id, sender_id: this.props.user.id, recipient_id: this.props.conversation.recipient_id === this.props.user.id ? this.props.conversation.sender_id : this.props.conversation.recipient_id})
+  }
+
+  componentWillReceiveProps(){
+    this.setState({show: false})
+  }
+
   render(){
 
     const messages = this.props.conversation.messages.map(m =>
@@ -33,21 +46,22 @@ class Conversation extends React.Component{
     const replyForm = (
       <div>
         <br/>
-        <h4>Reply</h4>
+        <h3>Reply</h3>
+        <Divider/>
         <Form>
-          <Form.TextArea label='Message' placeholder='Please enter your message' />
-          <Form.Button color='black'><i class="reply icon"></i>Send</Form.Button>
+          <Form.TextArea value={this.state.message} onChange={this.handleChange} label='Message' placeholder='Please enter your message' />
+          <Form.Button onClick={this.handleSubmit} size="mini" color='black'><i class="send icon"></i>Send</Form.Button>
         </Form>
       </div>
     )
 
     return(
-      <Segment>
-        <h4>Your Conversation With {this.props.conversation.recipient_name === this.props.user.username ? this.props.conversation.sender_name : this.props.conversation.recipient_name}</h4>
-        <button class="ui mini black button" onClick={this.handleShow}><i class="expand icon"></i>expand</button>
-        {this.state.show ? messages : null}
+      <div>
+        <h3>Your Conversation With {this.props.conversation.recipient_name === this.props.user.username ? this.props.conversation.sender_name : this.props.conversation.recipient_name}</h3>
+        { messages }
+        <button class="ui mini black button" onClick={this.handleShow}><i class="reply icon"></i>Reply</button>
         {this.state.show ? replyForm : null}
-      </Segment>
+      </div>
 
     )
   }

@@ -89,7 +89,7 @@ export const createMessage = (data) => dispatch => {
     if (message.errors){
       // dispatch({ type: SET_CREATE_LISTING_ERROR_TRUE, errors: listing.errors })
     } else{
-      dispatch({ type: ADD_MESSAGE_TO_USER, message: message });
+      dispatch({ type: ADD_MESSAGE_TO_USER, message: Object.assign({}, {message_time: 'just now'}, message)});
     }
   });
 };
