@@ -13,14 +13,17 @@ const getWithToken = url => {
 };
 
 const getCurrentUser = () => {
+  console.log('fetching user')
   return getWithToken(`${API_ROOT}/current_user`);
 };
 
 const getListings = () => {
+  console.log('get listings')
   return getWithToken(`${API_ROOT}/listings`);
 };
 
 const login = data => {
+  console.log('login')
   return fetch(`${API_ROOT}/login/`, {
     method: 'POST',
     headers,
@@ -29,6 +32,7 @@ const login = data => {
 };
 
 const register = data => {
+  console.log('register')
   return fetch(`${API_ROOT}/users/`, {
     method: 'POST',
     headers,
@@ -37,6 +41,7 @@ const register = data => {
 };
 
 const createListing = data => {
+  console.log('create listing')
   const token = localStorage.getItem('token');
   return fetch(`${API_ROOT}/listings/`, {
     method: 'POST',
@@ -50,6 +55,7 @@ const createListing = data => {
 };
 
 const createMessage = data => {
+  console.log('create message')
   const token = localStorage.getItem('token');
   return fetch(`${API_ROOT}/messages/`, {
     method: 'POST',
@@ -63,6 +69,7 @@ const createMessage = data => {
 };
 
 const deleteListing = id => {
+  console.log('delete listing')
   const token = localStorage.getItem('token');
   return fetch(`${API_ROOT}/listings/${id}`, {
     method: 'DELETE',

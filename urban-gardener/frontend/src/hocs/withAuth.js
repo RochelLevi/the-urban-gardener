@@ -14,6 +14,7 @@ const withAuth = WrappedComponent => {
     componentDidMount() {
       if (localStorage.getItem('token')) {
         this.props.fetchUser();
+        // this.props.user && this.props.user.id ? null : this.props.fetchUser()
         (this.props.listings && this.props.listings.length) ? null : this.props.fetchListings()
       } else {
         this.setState({ authCompleted: true });
@@ -41,7 +42,8 @@ const withAuth = WrappedComponent => {
 
   const mapStateToProps = state => ({
     loggedIn: !!state.auth.currentUser.id,
-    listings: state.listings
+    listings: state.listings,
+    user: state.user
   });
 
   return connect(mapStateToProps, actions)(AuthedComponent);

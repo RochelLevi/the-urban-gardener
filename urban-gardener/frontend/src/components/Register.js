@@ -14,19 +14,23 @@ class Register extends React.Component {
       password: '',
       streetAddress: '',
       zipCode: '',
+      showError: false,
     }
   }
+
 
   handleSubmit = (event) => {
     event.preventDefault()
     const data = {email: this.state.email, username: this.state.username, password: this.state.password, street_address: this.state.streetAddress, zip: this.state.zipCode}
     this.props.registerUser(data, this.props.history);
+    this.setState({email: '', username: '', password: '', streetAddress: '', zipCode: '', showError: true})
+    this.props.registerError.isError ? this.props.clearOutRegisterErrors() : null
   }
 
   handleChange = (e) => {
     const field = e.target.name
     const value = e.target.value
-    this.setState({[field]: value})
+    this.setState({[field]: value, showError: false})
   }
 
   render(){
@@ -58,7 +62,7 @@ class Register extends React.Component {
         <form class="ui large form" onSubmit={this.handleSubmit}>
           <div class="ui stacked secondary segment">
 
-            {this.props.registerError.isError? backendErrors : ''}
+            {this.props.registerError.isError && this.state.showError ? backendErrors : null}
 
             <div class="field">
               <div class="ui left icon input">

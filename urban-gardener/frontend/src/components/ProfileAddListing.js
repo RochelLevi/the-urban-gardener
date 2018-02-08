@@ -19,8 +19,8 @@ class ProfileAddListing extends React.Component{
       sunlight_amount: '',
       desired_garden_type: '',
       compensation_type: '',
-      dollar_compensation_amount: '',
-      percentage_compensation_amount: '',
+      dollar_compensation_amount: 0,
+      percentage_compensation_amount: 0,
       description: '',
       avatar_file_name: '',
       avatar: '',
@@ -37,23 +37,25 @@ class ProfileAddListing extends React.Component{
   handleChange = (event) => {
     const field = event.target.name
     const value = event.target.value
-    this.setState({[field]: value})
+    this.setState({[field]: value, show_message: false})
+    this.props.listingError.isError ? this.props.clearOutListingErrors() : null
+
   }
 
 
-  onDrop = (e) => {
-   var file = this.refs.file.files[0];
-   var reader = new FileReader();
-   var url = reader.readAsDataURL(file);
-   const file_name = e.target.files[0].name
-   reader.onloadend = (e) => {
-     this.setState({
-        avatar_file_name: file_name,
-         avatar: reader.result,
-         img_url_1: reader.result
-     })
-   }
-  }
+  // onDrop = (e) => {
+  //  var file = this.refs.file.files[0];
+  //  var reader = new FileReader();
+  //  var url = reader.readAsDataURL(file);
+  //  const file_name = e.target.files[0].name
+  //  reader.onloadend = (e) => {
+  //    this.setState({
+  //       avatar_file_name: file_name,
+  //        avatar: reader.result,
+  //        img_url_1: reader.result
+  //    })
+  //  }
+  // }
 
   handleSubmit = (e) => {
     e.preventDefault()
@@ -65,8 +67,8 @@ class ProfileAddListing extends React.Component{
       sunlight_amount: '',
       desired_garden_type: '',
       compensation_type: '',
-      dollar_compensation_amount: '',
-      percentage_compensation_amount: '',
+      dollar_compensation_amount: 0,
+      percentage_compensation_amount: 0,
       description: '',
       avatar_file_name: '',
       avatar_content_type: '',
@@ -78,15 +80,14 @@ class ProfileAddListing extends React.Component{
   }
 
   render(){
-    console.log('show message', this.state.show_message)
-    console.log('error', this.props.listingError)
+  
     return (
 
         <div className='ui segment'>
           <h4> Add a Listing </h4>
             <Form error success>
               <Form.Input required fluid value={this.state.title} name='title' label='Title' placeholder='Listing title' onChange={this.handleChange}/>
-              <Form.Group>
+              <Form.Group >
                 <Form.Input required value={this.state.street_address} name='street_address' label='Street Address' placeholder='Street Address' width={10} onChange={this.handleChange}/>
                 <Form.Input required value={this.state.zip} name='zip' label='Zip Code' placeholder='Zip Code' maxlength="5" width={6} onChange={this.handleChange}/>
               </Form.Group>
@@ -191,10 +192,9 @@ class ProfileAddListing extends React.Component{
             </div>
 
 
-              <br/>
               <Form.Group widths={2}>
-                <Form.Input required value={this.state.dollar_compensation_amount} name='dollar_compensation_amount' label='Dollar Compensation Amount' placeholder='$$$$' onChange={this.handleChange}/>
-                <Form.Input required value={this.state.percentage_compensation_amount} name='percentage_compensation_amount' label='Percentage of Crops Compensation Amount' placeholder='%%%%' onChange={this.handleChange}/>
+                {this.state.compensation_type === 'Monetary' || this.state.compensation_type === 'Hybrid' ? <Form.Input required value={this.state.dollar_compensation_amount} name='dollar_compensation_amount' label='Dollar Compensation Amount' placeholder='$$$$' onChange={this.handleChange}/> : null}
+                {this.state.compensation_type === 'Percentage of Crops' || this.state.compensation_type === 'Hybrid' ?<Form.Input required value={this.state.percentage_compensation_amount} name='percentage_compensation_amount' label='Percentage of Crops Compensation Amount' placeholder='%%%%' onChange={this.handleChange}/> : null}
               </Form.Group>
               <Form.TextArea required value={this.state.description} name='description' label='Description' placeholder='Tell us more about your property...' onChange={this.handleChange}/>
 
@@ -210,7 +210,7 @@ class ProfileAddListing extends React.Component{
               <br/>
               <br/>
 
-                {this.state.show_message && !this.props.listingError ? <Message
+                {this.state.show_message && !this.props.listingError.errors.length && (this.props.listingError.isError !== 'not set')? <Message
                   success
                   header='Form Completed'
                   content="Your Listing has Been Added and Should Appear on Our Site Momentarily"
@@ -218,10 +218,10 @@ class ProfileAddListing extends React.Component{
                 null
                 }
 
-                {this.state.show_message && this.props.listingError ?  <Message
+                {this.state.show_message && this.props.listingError.isError && (this.props.listingError.isError !== 'not set')?  <Message
                   error
-                  header='Error'
-                  content="There Was an Error in Your Submission. Please Try Again"
+                  header='Please Fix the Following Error(s) and Try Again'
+                  content={this.props.listingError.errors.map(e => <li>{e}</li>)}
                 /> :
                 null
               }

@@ -3,7 +3,7 @@ import '../css/stylesheet.css'
 import withAuth from '../hocs/withAuth';
 import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux'
-import { Form, Image } from 'semantic-ui-react'
+import { Form, Image, Message } from 'semantic-ui-react'
 
 class ListingShow extends React.Component {
 
@@ -12,7 +12,8 @@ class ListingShow extends React.Component {
 
     this.state = {
       currListing: {},
-      message: ''
+      message: '',
+      show_message: false
     }
   }
 
@@ -23,6 +24,7 @@ class ListingShow extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.createMessage({body: this.state.message, user_id: this.props.user.id, sender_id: this.props.user.id, recipient_id: this.state.currListing.user_id})
+    this.setState({message: '', show_message: true})
   }
 
   getListingId(){
@@ -110,8 +112,25 @@ class ListingShow extends React.Component {
 
           <div className='ui segment'>
             <h4>Message Seller</h4>
-            <Form>
-              <Form.TextArea label='Message' value={this.state.message} onChange={this.handleChange} placeholder='Please enter your message' />
+            <Form error success>
+              <Form.TextArea required label='Body' value={this.state.message} onChange={this.handleChange} placeholder='Please enter your message' />
+
+                {this.state.show_message && !this.props.messageError.isError ? <Message
+                  success
+                  header='Success!'
+                  content="Your Message Has Been Sent"
+                /> :
+                null
+                }
+
+                {this.state.show_message && this.props.messageError.isError ?  <Message
+                  error
+                  header='Please Fix the Following Error(s) and Try Again'
+                  content={this.props.messageError.errors.map(e => <li>{e}</li>)}
+                /> :
+                null
+              }
+
               <Form.Button color='black' onClick={this.handleSubmit}>Send</Form.Button>
             </Form>
           </div>
@@ -124,7 +143,7 @@ class ListingShow extends React.Component {
 
 
 const mapStateToProps = (state) => {
-  return {listings: state.listings, user: state.user}
+  return {listings: state.listings, user: state.user, messageError: state.messageError}
 }
 
 export default withRouter(withAuth(connect(mapStateToProps, null)(ListingShow)))

@@ -54,12 +54,25 @@ const loginErrorReducer = (state = false, action) => {
   }
 };
 
-const listingErrorReducer = (state = false, action) => {
+const listingErrorReducer = (state = {isError: 'not set', errors: []}, action) => {
   switch (action.type) {
     case 'ADD_LISTING_TO_USER':
-      return false;
+      return {isError: false, errors: []};
+    case 'SET_CREATE_LISTING_ERROR_FALSE':
+      return {isError: 'not set', errors: []};
     case 'SET_CREATE_LISTING_ERROR_TRUE':
-      return true;
+      return {isError: true, errors: action.errors};
+    default:
+      return state;
+  }
+};
+
+const messageErrorReducer = (state = {isError: 'false', errors: []}, action) => {
+  switch (action.type) {
+    case 'ADD_MESSAGE_TO_USER':
+      return {isError: false, errors: []};
+    case 'SET_CREATE_MESSAGE_ERROR_TRUE':
+      return {isError: true, errors: action.errors};
     default:
       return state;
   }
@@ -70,7 +83,7 @@ const registerErrorReducer = (state = {isError: false, errors: []}, action) => {
     case 'SET_REGISTER_ERROR_TRUE':
       return ({isError: true, errors: action.errors });
     case 'SET_REGISTER_ERROR_FALSE':
-      return {isError: false, errors: {}};
+      return {isError: false, errors: []};
     default:
       return state;
   }
@@ -88,8 +101,6 @@ const listingsFiltersReducer = (state = {}, action) => {
 
 function filteredListings(listings, filters){
   return listings.filter( (l) => {
-    console.log(l.distance_value * 0.000621371)
-    console.log(filters.distance_miles)
     return (
       (filters.garden_type ? l.desired_garden_type === filters.garden_type : true) &&
       (filters.compensation_type ? l.compensation_type === filters.compensation_type : true) &&
@@ -116,6 +127,7 @@ const rootReducer = combineReducers({
   loginError: loginErrorReducer,
   registerError: registerErrorReducer,
   listingError: listingErrorReducer,
+  messageError: messageErrorReducer,
   listings: listingsReducer,
   listingsFilters: listingsFiltersReducer,
   filteredListings: filteredListingsReducer

@@ -2,12 +2,12 @@ import { adapter } from '../services';
 import {ASYNC_START, SET_CURRENT_USER, LOGOUT_USER, SET_LOGIN_ERROR, REGISTER_NEW_USER,
     SET_REGISTER_ERROR_TRUE, SET_REGISTER_ERROR_FALSE, DELETE_LISTING, SET_CREATE_LISTING_ERROR_TRUE,
     ADD_LISTING_TO_USER, GET_LISTINGS, CHANGE_LISTING_FILTER, FILTER_LISTINGS,
-    UPDATE_FILTERED_LISTINGS_WITH_LOCATION, ADD_MESSAGE_TO_USER} from './types';
+    UPDATE_FILTERED_LISTINGS_WITH_LOCATION, ADD_MESSAGE_TO_USER, SET_CREATE_MESSAGE_ERROR_TRUE,
+   SET_CREATE_LISTING_ERROR_FALSE} from './types';
 
 export const fetchUser = () => dispatch => {
   dispatch({ type: ASYNC_START });
   adapter.auth.getCurrentUser().then(user => {
-    console.log('user', user)
     dispatch({ type: SET_CURRENT_USER, payload: user });
   });
 };
@@ -33,9 +33,6 @@ export const changeListingsFilter = (filters) => dispatch => {
   dispatch({ type: CHANGE_LISTING_FILTER, filter: filters });
 };
 
-// export const filterListings = (listings, filters) => dispatch => {
-//   dispatch({ type: FILTER_LISTINGS, listings: listings, filters: filters});
-// };
 
 export const deleteListing = (id) => dispatch => {
   dispatch({ type: ASYNC_START });
@@ -58,6 +55,17 @@ export const loginUser = (email, password, history) => dispatch => {
     }
   });
 };
+
+export const clearOutRegisterErrors = () => dispatch => {
+      dispatch({ type: ASYNC_START });
+      dispatch({ type: SET_REGISTER_ERROR_FALSE });
+}
+
+export const clearOutListingErrors = () => dispatch => {
+      dispatch({ type: ASYNC_START });
+      dispatch({ type: SET_CREATE_LISTING_ERROR_FALSE });
+}
+
 
 export const registerUser = (data, history) => dispatch => {
   dispatch({ type: ASYNC_START });
@@ -87,7 +95,7 @@ export const createMessage = (data) => dispatch => {
   dispatch({ type: ASYNC_START });
   adapter.createMessage(data).then(message => {
     if (message.errors){
-      // dispatch({ type: SET_CREATE_LISTING_ERROR_TRUE, errors: listing.errors })
+      dispatch({ type: SET_CREATE_MESSAGE_ERROR_TRUE, errors: message.errors })
     } else{
       dispatch({ type: ADD_MESSAGE_TO_USER, message: Object.assign({}, {message_time: 'just now'}, message)});
     }

@@ -4,6 +4,7 @@ import withAuth from '../hocs/withAuth';
 import ListingCard from './ListingCard'
 import ListingFilterBar from './ListingFilterBar'
 import {connect} from 'react-redux'
+import { Dimmer, Segment, Loader, Image} from 'semantic-ui-react'
 
 class ListingsSearchContainer extends React.Component{
 
@@ -11,11 +12,22 @@ class ListingsSearchContainer extends React.Component{
     super()
 
     this.state = {
-      showFilterBar: false
+      showFilterBar: false,
+      loading: false,
     }
   }
 
+  componentWillReceiveProps(nextProps){
+    this.setState({loading: false})
+  }
+
+  showLoadingBar = () => {
+    this.setState({loading: true})
+  }
+
   addDistanceToListings = (listings, inputOrigin, filtered, filters=[]) => {
+
+    console.log('adding location')
 
     const origin = inputOrigin.replace(/[\s]+/g, '+')
     const urlRoot = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
@@ -23,6 +35,7 @@ class ListingsSearchContainer extends React.Component{
     const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
     const METER_TO_MILE = 0.000621371
     const listingsWithDistance = []
+
 
     listings.forEach((l) => {
       const destination = `${l.street_address}, ${l.zip}`.replace(/[\s]+/g, '+')
@@ -42,39 +55,19 @@ class ListingsSearchContainer extends React.Component{
 
   }
 
-  // componentWillReceiveProps(nextProps){
-  //   // console.log(nextProps.filterListings.listings)
-  //   // console.log(nextProps.filters.location)
-  //   // console.log(this.props.filters.location)
-  //   if (nextProps.filters.location !== this.props.filters.location ||
-  //       nextProps.filters.distance_miles !== this.props.filters.distance_miles ||
-  //       nextProps.filters.garden_type !== this.props.filters.garden_type ||
-  //       nextProps.filters.compensation_type !== this.props.filters.compensation_type ||
-  //       !this.props.listings[0].street_address){
-  //         console.log('here')
-  //     const userOrigin = `${this.props.user.street_address}, ${this.props.user.zip}`
-  //     const filterOrigin = nextProps.filters.location ? nextProps.filters.location : `${this.props.user.street_address}, ${this.props.user.zip}`
-  //     // console.log('filter origin', filterOrigin)
-  //     this.addDistanceToListings(nextProps.listings, userOrigin, false)
-  //     this.addDistanceToListings(nextProps.filteredListings.listings, filterOrigin, true, nextProps.filters)
-  //   }
-  //
-  //
-  // }
+
 
   componentDidMount(){
-    console.log('mounting')
-    const userOrigin = `${this.props.user.street_address}, ${this.props.user.zip}`
-    const filterOrigin = this.props.filters.location ? this.props.filters.location : `${this.props.user.street_address}, ${this.props.user.zip}`
-    console.log(userOrigin)
-    this.addDistanceToListings(this.props.listings, userOrigin, false)
-    this.addDistanceToListings(this.props.filteredListings.listings, filterOrigin, true, this.props.filters)
+    if(this.props.listings && this.props.listings.length && !this.props.listings[0].distance_text){
+      const userOrigin = `${this.props.user.street_address}, ${this.props.user.zip}`
+      this.addDistanceToListings(this.props.listings, userOrigin, false)
+    }
+
   }
 
 
 
   render(){
-    console.log(this.props.listings)
     const listingCards = this.props.filteredListings.filtered ?
     this.props.filteredListings.listings.map(listing => <ListingCard listing={listing}/>) :
     this.props.listings.map(listing => <ListingCard listing={listing}/>)
@@ -90,23 +83,25 @@ class ListingsSearchContainer extends React.Component{
         <br/>
         <br/>
 
-        {this.state.showFilterBar ? <ListingFilterBar addLocation={this.addDistanceToListings}/> : null }
+        {this.state.showFilterBar ? <ListingFilterBar showLoadingBar={this.showLoadingBar} addLocation={this.addDistanceToListings}/> : null }
 
         <br/>
 
-        {listingCards.length ? null : <h3> Sorry, no listings matched your search</h3>}
-
-        <div class="ui link cards">
-          {listingCards}
-        </div>
-
+        {this.state.loading && !this.state.filteredListings ? <Loader active inline='centered' size='large'>Loading</Loader> :
+          <div>
+            {listingCards.length ? null : <h3> Sorry, no listings matched your search</h3>}
+            <div class="ui link cards">
+              {listingCards}
+            </div>
+          </div>
+        }
       </div>
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  return {user: state.user, listings: state.listings, filteredListings: state.filteredListings, filters: state.listingsFilters}
+  return {user: state.user, listings: state.listings, filteredListings: state.filteredListings}
 }
 
 export default withAuth(connect(mapStateToProps, null)(ListingsSearchContainer))

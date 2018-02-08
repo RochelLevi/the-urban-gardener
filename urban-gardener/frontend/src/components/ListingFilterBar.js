@@ -13,28 +13,57 @@ class ListingsFilterBar extends React.Component {
       distance_miles: '',
       compensation_type: '',
       garden_type: '',
-
+      invalid_address: false
     }
   }
+
+  validateLocation(location){
+    const urlRoot = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
+    const origin = '59 Carlton Rd, 10952'.replace(' ', '+')
+    const key = 'AIzaSyBISW6GubT1FZyI10G3-wifH_rm5eQZrdk'
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
+
+    return fetch(proxyUrl + `${urlRoot}origins=${origin}&destinations=${location}&key=${key}`)
+      .then(res => res.json())
+  }
+
+
 
   handleChange = (e) => {
     const field = e.target.name
     const value = e.target.value
-    this.setState({[field]: value})
+    this.setState({[field]: value, invalid_address: false})
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
+    // this.props.showLoadingBar()
     this.props.changeListingsFilter(this.state)
-    // this.props.filterListings(this.props.listings, this.state)
-    const origin = this.state.location ? this.state.location : `${this.props.user.street_address}, ${this.props.user.zip}`
-    this.props.addLocation(this.props.listings, origin, true, this.state)
+    let origin;
+    if (this.state.location){
+      this.validateLocation(this.state.location)
+        .then(data => {
+          if(data.destination_addresses[0] === ""){
+            this.setState({invalid_address: true, location: ''})
+          }else{
+            this.props.showLoadingBar()
+            this.props.addLocation(this.props.listings, this.state.location, true, this.state)
+          }
+        })
+    } else{
+      origin = `${this.props.user.street_address}, ${this.props.user.zip}`
+      this.props.showLoadingBar()
+      this.props.addLocation(this.props.listings, origin, true, this.state)
+    }
+
+    // const origin = this.state.location ? this.state.location : `${this.props.user.street_address}, ${this.props.user.zip}`
+    // this.props.addLocation(this.props.listings, origin, true, this.state)
   }
 
   render(){
     return(
       <div class="ui segment">
-        <form class="ui form" >
+        <form class="ui form error" >
 
           <h4 class="ui dividing header">Filter By Location:</h4>
           <div class="fields">
@@ -85,6 +114,12 @@ class ListingsFilterBar extends React.Component {
               </div>
             </div>
 
+            {this.state.invalid_address ?
+              <div class="ui error message">
+                <div class="header">Error</div>
+                <p>Please Enter A Valid Location</p>
+              </div> :
+            null}
 
 
           <div class="ui small black button" onClick={this.handleSubmit}><i class="search icon"></i>Search</div>
