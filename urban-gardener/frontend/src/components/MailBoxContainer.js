@@ -44,7 +44,7 @@ class MailBoxContainer extends React.Component{
           </Grid.Column>
 
           <Grid.Column stretched width={16}>
-
+              {this.props.user.conversations.length ? null : "You have no messages"}
               {this.state.activeItem ?
                 <Segment>
                   <Conversation conversation={this.state.activeItem}/>

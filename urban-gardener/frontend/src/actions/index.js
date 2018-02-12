@@ -19,15 +19,20 @@ export const fetchListings = () => dispatch => {
   });
 };
 
-export const updateListingsWithDistance = (listings, filtered, filters) => dispatch => {
-  dispatch({ type: ASYNC_START });
-  if(filtered){
-    // dispatch({ type: UPDATE_FILTERED_LISTINGS_WITH_LOCATION, payload: listings });
-    dispatch({ type: FILTER_LISTINGS, listings: listings, filters: filters});
-  } else{
-    dispatch({ type: GET_LISTINGS, payload: listings });
-  }
-};
+export const filterListings = (listings, filters) => dispatch => {
+   dispatch({ type: FILTER_LISTINGS, listings: listings, filters: filters});
+ };
+
+
+// export const updateListingsWithDistance = (listings, filtered, filters) => dispatch => {
+//   dispatch({ type: ASYNC_START });
+//   if(filtered){
+//     // dispatch({ type: UPDATE_FILTERED_LISTINGS_WITH_LOCATION, payload: listings });
+//     dispatch({ type: FILTER_LISTINGS, listings: listings, filters: filters});
+//   } else{
+//     dispatch({ type: GET_LISTINGS, payload: listings });
+//   }
+// };
 
 export const changeListingsFilter = (filters) => dispatch => {
   dispatch({ type: CHANGE_LISTING_FILTER, filter: filters });

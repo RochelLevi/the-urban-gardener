@@ -49,12 +49,13 @@ class ListingsFilterBar extends React.Component {
             this.props.hideLoadingBar()
             this.setState({invalid_address: true, location: ''})
           }else{
-            this.props.addLocation(this.props.listings, this.state.location, true, this.state)
+            this.props.addLocation(this.props.listings, this.state.location, this.state)
           }
         })
     } else{
-      origin = `${this.props.user.street_address}, ${this.props.user.zip}`
-      this.props.addLocation(this.props.listings, origin, true, this.state)
+      this.props.filterListings(this.props.listings, this.state)
+      // origin = `${this.props.user.street_address}, ${this.props.user.zip}`
+      // this.props.addLocation(this.props.listings, origin, true, this.state)
     }
 
     // const origin = this.state.location ? this.state.location : `${this.props.user.street_address}, ${this.props.user.zip}`

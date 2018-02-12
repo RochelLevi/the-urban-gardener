@@ -32,7 +32,7 @@ class ListingsSearchContainer extends React.Component{
     this.setState({loading: false})
   }
 
-  addDistanceToListings = (listings, inputOrigin, filtered, filters=[]) => {
+  addDistanceToListings = (listings, inputOrigin, filters=[]) => {
 
     const origin = inputOrigin.replace(/[\s]+/g, '+')
     const urlRoot = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
@@ -59,7 +59,7 @@ class ListingsSearchContainer extends React.Component{
           }
 
         }).then(() => {
-          listingsWithDistance.length === listings.length ? this.props.updateListingsWithDistance(listingsWithDistance, filtered, filters) : null
+          listingsWithDistance.length === listings.length ? this.props.filterListings(listingsWithDistance, filters) : null
         })
     })
 
