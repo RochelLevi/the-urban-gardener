@@ -22,7 +22,7 @@ class ListingCard extends React.Component{
     return(
       <div class="card">
         <a class="image" href={'/listings/' + this.props.listing.id}>
-          <img src={this.props.listing.img_url_1}></img>
+          <img src={this.props.listing.img_url_1 ? this.props.listing.img_url_1 : this.props.listing.avatar}></img>
         </a>
 
         <div class="content">
@@ -37,7 +37,7 @@ class ListingCard extends React.Component{
           <br/>
 
           <div class="meta">
-            <span> <i class="marker icon"></i> {this.props.listing.distance_text} </span>
+            <span> <i class="marker icon"></i> {this.props.listing.distance_text ? this.props.listing.distance_text : `${this.props.listing.street_address}, ${this.props.listing.zip}`} </span>
           </div>
         </div>
 

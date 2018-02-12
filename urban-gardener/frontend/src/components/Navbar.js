@@ -26,7 +26,7 @@ class Navbar extends Component {
   render(){
     return (
       <div class="ui top fixed menu">
-        <NavLink to="/" className="item"><img className='icon' src={require("../css/images/carrot-icon-2.png")}></img></NavLink>
+        <NavLink to="/" className="item"><img className='icon' src={require("../css/images/carrot-icon-3.png")}></img></NavLink>
         <NavLink className="item" to="/my-profile" className="item">Profile</NavLink>
         <NavLink className="item" to="/search-listings" className="item">Search Listings</NavLink>
         <NavLink className="item" to="/messages" className="item">Messages</NavLink>

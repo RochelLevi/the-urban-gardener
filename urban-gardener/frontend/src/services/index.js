@@ -46,11 +46,9 @@ const createListing = data => {
   return fetch(`${API_ROOT}/listings/`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
-      Accepts: 'application/json',
       Authorization: token
     },
-    body: JSON.stringify(data)
+    body: data
   }).then(res => res.json());
 };
 

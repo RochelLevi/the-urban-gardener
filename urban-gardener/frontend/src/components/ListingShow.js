@@ -3,7 +3,7 @@ import '../css/stylesheet.css'
 import withAuth from '../hocs/withAuth';
 import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux'
-import { Form, Image, Message } from 'semantic-ui-react'
+import { Form, Image, Message, Grid } from 'semantic-ui-react'
 
 class ListingShow extends React.Component {
 
@@ -32,19 +32,27 @@ class ListingShow extends React.Component {
     return arr[arr.length - 1]
   }
 
-  componentDidMount(){
+  // componentDidMount(){
+  //   const listingId = this.getListingId()
+  //   const currListing = this.props.listings.filter(l => l.id === parseInt(listingId))[0]
+  //   this.setState({currListing})
+  // }
 
-    const listingId = this.getListingId()
-    const currListing = this.props.listings.filter(l => l.id === parseInt(listingId))[0]
-    this.setState({currListing})
+  componentWillReceiveProps(nextProps){
+    if (!this.props.listings.length && nextProps.listings.length) {
+      const listingId = this.getListingId()
+      const currListing = nextProps.listings.filter(l => l.id === parseInt(listingId))[0]
+      this.setState({currListing})
+    }
   }
 
   render(){
+    console.log(this.state.currListing)
     return(
 
       <div class="ui container">
 
-          <h1>{this.state.currListing.title} </h1>
+        <h1>{this.state.currListing.title} </h1>
 
         <br/>
 
@@ -54,24 +62,25 @@ class ListingShow extends React.Component {
           <div class="ui segment">
             {  // <img src={this.state.currListing.img_url_1} height='100%' width="100%"></img>
             }
-              <Image src={this.state.currListing.img_url_1} size='large'/>
+              <Image src={this.state.currListing.img_url_1 ? this.state.currListing.img_url_1 : this.state.currListing.avatar} size='large'/>
           </div>
           <div class="ui segment">
             {// <img src={this.state.currListing.img_url_2} height='100%' width="100%"></img>
             }
-            <Image src={this.state.currListing.img_url_2} size='large'/>
+            <Image src={this.state.currListing.img_url_2 ? this.state.currListing.img_url_2 : this.state.currListing.avatar_2} size='large'/>
           </div>
         </div>
 
         <br/>
-        <div class="ui horizontal segments">
 
-          <div className='ui compact segment'>
-            <h4>Description</h4>
-            <p>{this.state.currListing.description}</p>
-          </div>
+        <Grid columns='equal' divided='true' >
+        <Grid.Row stretched>
+          <Grid.Column  >
+              <h4>Description</h4>
+              <p>{this.state.currListing.description}</p>
+          </Grid.Column>
 
-            <div className='ui compact segment'>
+          <Grid.Column>
               <h4> More Information</h4>
               <div class="ui list">
                 <div class="item">
@@ -105,10 +114,9 @@ class ListingShow extends React.Component {
                   </div>
                 </div>
               </div>
-            </div>
-
-
-          </div>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
 
           <div className='ui segment'>
             <h4>Message Seller</h4>

@@ -19,12 +19,11 @@ class ProfileAddListing extends React.Component{
       sunlight_amount: '',
       desired_garden_type: '',
       compensation_type: '',
-      dollar_compensation_amount: 0,
-      percentage_compensation_amount: 0,
+      dollar_compensation_amount: '',
+      percentage_compensation_amount: '',
       description: '',
-      avatar_file_name: '',
       avatar: '',
-      img_url_1: '',
+      avatar_2: '',
 
       show_message: false
     }
@@ -42,24 +41,38 @@ class ProfileAddListing extends React.Component{
 
   }
 
+  onDrop = (event) => {
+    const file = event.target.files[0]
+    const field = event.target.name
+    this.setState({[field]: file, show_message: false})
+ }
+
 
   // onDrop = (e) => {
-  //  var file = this.refs.file.files[0];
-  //  var reader = new FileReader();
-  //  var url = reader.readAsDataURL(file);
-  //  const file_name = e.target.files[0].name
-  //  reader.onloadend = (e) => {
-  //    this.setState({
-  //       avatar_file_name: file_name,
-  //        avatar: reader.result,
-  //        img_url_1: reader.result
-  //    })
-  //  }
+  //   this.setState({avatar: e[0], show_message: false})
   // }
 
   handleSubmit = (e) => {
     e.preventDefault()
-    this.props.createListing(this.state, this.props.history)
+
+    const formData = new FormData()
+    formData.append('user_id', this.state.user_id)
+    formData.append('title', this.state.title)
+    formData.append('street_address', this.state.street_address)
+    formData.append('zip', this.state.zip)
+    formData.append('sunlight_amount', this.state.sunlight_amount)
+    formData.append('desired_garden_type', this.state.desired_garden_type)
+    formData.append('compensation_type', this.state.compensation_type)
+    formData.append('dollar_compensation_amount', this.state.dollar_compensation_amount ? this.state.dollar_compensation_amount : 0)
+    formData.append('percentage_compensation_amount', this.state.percentage_compensation_amount ? this.state.percentage_compensation_amount : 0)
+    formData.append('description', this.state.description)
+    formData.append('avatar', this.state.avatar)
+    formData.append('avatar_2', this.state.avatar_2)
+    formData.append('img_url_1', this.state.img_url_1)
+
+    // formData.forEach(d => console.log(d))
+
+    this.props.createListing(formData, this.props.history)
     this.setState({
       title: '',
       street_address: '',
@@ -67,20 +80,17 @@ class ProfileAddListing extends React.Component{
       sunlight_amount: '',
       desired_garden_type: '',
       compensation_type: '',
-      dollar_compensation_amount: 0,
-      percentage_compensation_amount: 0,
+      dollar_compensation_amount: '',
+      percentage_compensation_amount: '',
       description: '',
-      avatar_file_name: '',
-      avatar_content_type: '',
-      avatar_file_size: '',
       avatar: '',
-      img_url_1: '',
+      avatar_2: '',
       show_message: true
     })
   }
 
   render(){
-  
+
     return (
 
         <div className='ui segment'>
@@ -198,14 +208,29 @@ class ProfileAddListing extends React.Component{
               </Form.Group>
               <Form.TextArea required value={this.state.description} name='description' label='Description' placeholder='Tell us more about your property...' onChange={this.handleChange}/>
 
-              <label for="image_uploads">Choose images to upload (PNG, JPG)</label>
-              <input ref='file' type='file' onChange={this.onDrop}/>
+              <br/>
+
+              <label for="image_uploads"><b>Choose an image to upload (PNG, JPG) - this will be your featured image</b></label>
+              <input class="ui field" type='file' name='avatar' onChange={this.onDrop}/>
 
               <br/>
               <br/>
+              <label for="image_uploads"><b>Choose images to upload (PNG, JPG)</b></label>
+              <input type='file' name='avatar_2' onChange={this.onDrop}/>
+            {  // <div style={{'text-align': 'center'}}><b  for="image_uploads">Choose up to two images to upload (PNG, JPG)</b></div>
+              // <ImageUploader
+              //   withPreview={false}
+              //   buttonClassName='ui mini black button'
+              //   withIcon={true}
+              //   buttonText='Choose images'
+              //   onChange={this.onDrop}
+              //   label='Max file size: 5mb, accepted: .jpg, .png, .gif'
+              //   imgExtension={['.jpg', '.gif', '.png', '.gif']}
+              //   maxFileSize={5242880}
+              //
+              //  />
+            }
 
-              <label for="image_uploads">Or add a URL</label>
-              <input type='text' name='img_url_1' value={this.state.img_url_1} onChange={this.handleChange}/>
 
               <br/>
               <br/>

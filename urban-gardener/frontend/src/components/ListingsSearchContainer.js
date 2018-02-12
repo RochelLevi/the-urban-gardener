@@ -12,26 +12,31 @@ class ListingsSearchContainer extends React.Component{
     super()
 
     this.state = {
-      showFilterBar: false,
       loading: false,
     }
   }
 
   componentWillReceiveProps(nextProps){
     this.setState({loading: false})
+    // if (!this.props.listings.length && nextProps.listings.length  && !nextProps.listings[0].distance_text) {
+      // const userOrigin = `${this.props.user.street_address}, ${this.props.user.zip}`
+      // this.addDistanceToListings(this.props.listings, userOrigin, false)
+    // }
   }
 
   showLoadingBar = () => {
     this.setState({loading: true})
   }
 
-  addDistanceToListings = (listings, inputOrigin, filtered, filters=[]) => {
+  hideLoadingBar = () => {
+    this.setState({loading: false})
+  }
 
-    console.log('adding location')
+  addDistanceToListings = (listings, inputOrigin, filtered, filters=[]) => {
 
     const origin = inputOrigin.replace(/[\s]+/g, '+')
     const urlRoot = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
-    const key = 'AIzaSyBISW6GubT1FZyI10G3-wifH_rm5eQZrdk'
+    const key = 'AIzaSyAtmhQPWxmfXK2E44H1AoZAcMot7smLrMI'
     const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
     const METER_TO_MILE = 0.000621371
     const listingsWithDistance = []
@@ -43,11 +48,16 @@ class ListingsSearchContainer extends React.Component{
       fetch(proxyUrl + apiRoute)
         .then(res => res.json())
         .then(data => {
-          //handle bad address
-          let dist_text = data.rows[0].elements[0].distance.text
-          let dist_value = parseInt(data.rows[0].elements[0].distance.value)
-          let newListing = Object.assign({}, l, {distance_text: dist_text, distance_value: dist_value})
-          listingsWithDistance.push(newListing)
+          try {
+            let dist_text = data.rows[0].elements[0].distance.text
+            let dist_value = parseInt(data.rows[0].elements[0].distance.value)
+            let newListing = Object.assign({}, l, {distance_text: dist_text, distance_value: dist_value})
+            listingsWithDistance.push(newListing)
+          }
+          catch(err) {
+            listingsWithDistance.push(l)
+          }
+
         }).then(() => {
           listingsWithDistance.length === listings.length ? this.props.updateListingsWithDistance(listingsWithDistance, filtered, filters) : null
         })
@@ -56,13 +66,12 @@ class ListingsSearchContainer extends React.Component{
   }
 
 
-
   componentDidMount(){
-    if(this.props.listings && this.props.listings.length && !this.props.listings[0].distance_text){
-      const userOrigin = `${this.props.user.street_address}, ${this.props.user.zip}`
-      this.addDistanceToListings(this.props.listings, userOrigin, false)
-    }
-
+    this.setState({loading: true})
+    // if(this.props.listings && this.props.listings.length && !this.props.listings[0].distance_text){
+    //   const userOrigin = `${this.props.user.street_address}, ${this.props.user.zip}`
+    //   this.addDistanceToListings(this.props.listings, userOrigin, false)
+    // }
   }
 
 
@@ -75,15 +84,7 @@ class ListingsSearchContainer extends React.Component{
       <div class="ui container">
 
 
-        <span class="ui small black button" onClick={() => {this.setState({showFilterBar: !this.state.showFilterBar})}}>
-          <i class="filter icon"></i>
-          Filter Listings
-        </span>
-
-        <br/>
-        <br/>
-
-        {this.state.showFilterBar ? <ListingFilterBar showLoadingBar={this.showLoadingBar} addLocation={this.addDistanceToListings}/> : null }
+        <ListingFilterBar showLoadingBar={this.showLoadingBar} hideLoadingBar={this.hideLoadingBar} addLocation={this.addDistanceToListings}/>
 
         <br/>
 

@@ -2,6 +2,7 @@ import React from 'react'
 import '../css/stylesheet.css'
 import {connect} from 'react-redux'
 import * as actions from '../actions';
+import { Divider, Dropdown, Input} from 'semantic-ui-react'
 
 class ListingsFilterBar extends React.Component {
 
@@ -20,7 +21,8 @@ class ListingsFilterBar extends React.Component {
   validateLocation(location){
     const urlRoot = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
     const origin = '59 Carlton Rd, 10952'.replace(' ', '+')
-    const key = 'AIzaSyBISW6GubT1FZyI10G3-wifH_rm5eQZrdk'
+    const key2 = 'AIzaSyBISW6GubT1FZyI10G3-wifH_rm5eQZrdk'
+    const key = 'AIzaSyAtmhQPWxmfXK2E44H1AoZAcMot7smLrMI'
     const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
 
     return fetch(proxyUrl + `${urlRoot}origins=${origin}&destinations=${location}&key=${key}`)
@@ -29,30 +31,29 @@ class ListingsFilterBar extends React.Component {
 
 
 
-  handleChange = (e) => {
-    const field = e.target.name
-    const value = e.target.value
+  handleChange = (event, data) => {
+    const field = data.name
+    const value = data.value
     this.setState({[field]: value, invalid_address: false})
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
-    // this.props.showLoadingBar()
+    this.props.showLoadingBar()
     this.props.changeListingsFilter(this.state)
     let origin;
     if (this.state.location){
       this.validateLocation(this.state.location)
         .then(data => {
           if(data.destination_addresses[0] === ""){
+            this.props.hideLoadingBar()
             this.setState({invalid_address: true, location: ''})
           }else{
-            this.props.showLoadingBar()
             this.props.addLocation(this.props.listings, this.state.location, true, this.state)
           }
         })
     } else{
       origin = `${this.props.user.street_address}, ${this.props.user.zip}`
-      this.props.showLoadingBar()
       this.props.addLocation(this.props.listings, origin, true, this.state)
     }
 
@@ -61,69 +62,74 @@ class ListingsFilterBar extends React.Component {
   }
 
   render(){
+
     return(
-      <div class="ui segment">
-        <form class="ui form error" >
+      <div>
+        <h4>Filter Results</h4>
+        <Divider></Divider>
 
-          <h4 class="ui dividing header">Filter By Location:</h4>
-          <div class="fields">
+          <Input value={this.state.location} onChange={this.handleChange} name="location" size="small" icon='search' iconPosition='left' className='search' placeholder="Search by Location" />
 
-            <div class="five wide field">
-              <label>Location</label>
-              <input type="text" name="location" placeholder="Street Address, Zip Code" onChange={this.handleChange} value={this.state.location}/>
-            </div>
+          <span>{' '}</span>
 
-            <div class="three wide field">
-              <label>Distance: </label>
-              <select class="ui fluid search dropdown" name="distance_miles" onChange={this.handleChange} value={this.state.distance_miles}>
-                <option value="">Miles</option>
-                <option value=".25">.25</option>
-                <option value=".5">.5</option>
-                <option value="1">1</option>
-                <option value="3">3</option>
-                <option value="5">5</option>
-              </select>
-            </div>
-          </div>
+          {this.state.location ?
+            <span class={this.state.distance_miles ?  "ui small black button"  : "ui small white button"} >
 
-            <h4 class="ui dividing header">Filter By Cost:</h4>
-            <div class="fields">
+              {this.state.distance_miles ? <i class="filter icon"></i> : null}
+              {this.state.distance_miles ? `Within ${this.state.distance_miles} Miles` : 'Distance'}
+              <Dropdown>
+                <Dropdown.Menu>
+                  <Dropdown.Item name='distance_miles' value='.25' onClick={this.handleChange}>1/4 Mile</Dropdown.Item>
+                  <Dropdown.Item name='distance_miles' value='5'onClick={this.handleChange}>1/2 Mile</Dropdown.Item>
+                  <Dropdown.Item name='distance_miles' value='1' onClick={this.handleChange}>1 Mile</Dropdown.Item>
+                  <Dropdown.Item name='distance_miles' value='3' onClick={this.handleChange}>3 Mile</Dropdown.Item>
+                  <Dropdown.Item name='distance_miles' value='5' onClick={this.handleChange}>5 Mile</Dropdown.Item>
+                </Dropdown.Menu>
 
-              <div class="three wide field">
-                <label>Compensation Type </label>
-                <select class="ui fluid search dropdown" name="compensation_type" onChange={this.handleChange} value={this.state.compensation_type}>
-                  <option value="">Type</option>
-                  <option value="Monetary">Monetary Only</option>
-                  <option value="Percentage of Crops">Percentage of Crops Only</option>
-                  <option value="Hybrid">Hybrid</option>
-                </select>
-              </div>
-            </div>
-
-            <h4 class="ui dividing header">Filter By Requested Garden Type:</h4>
-            <div class="fields">
-
-              <div class="three wide field">
-                <label>Garden Type </label>
-                <select class="ui fluid search dropdown" name="garden_type" onChange={this.handleChange} value={this.state.garden_type}>
-                  <option value="">Type</option>
-                  <option value="Vegetable">Vegetable</option>
-                  <option value="Herb">Herb</option>
-                  <option value="Flower">Flower</option>
-                </select>
-              </div>
-            </div>
-
-            {this.state.invalid_address ?
-              <div class="ui error message">
-                <div class="header">Error</div>
-                <p>Please Enter A Valid Location</p>
-              </div> :
-            null}
+              </Dropdown>
+            </span> : null}
 
 
-          <div class="ui small black button" onClick={this.handleSubmit}><i class="search icon"></i>Search</div>
-        </form>
+            <span class={this.state.garden_type ?  "ui small black button"  : "ui small white button"} >
+
+              {this.state.garden_type ? <i class="filter icon"></i> : null}
+              {this.state.garden_type ? `${this.state.garden_type} Garden` : 'Garden Type'}
+              <Dropdown onChange={this.handleChange}>
+                <Dropdown.Menu>
+                  <Dropdown.Menu scrolling>
+                    <Dropdown.Item name='garden_type' value='Herb' onClick={this.handleChange}>Herb</Dropdown.Item>
+                    <Dropdown.Item name='garden_type' value='Vegetable' onClick={this.handleChange}>Vegetable</Dropdown.Item>
+                    <Dropdown.Item name='garden_type' value='Flower' onClick={this.handleChange}>Flower</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown.Menu>
+              </Dropdown>
+          </span>
+
+          <span class={this.state.compensation_type ?  "ui small black button"  : "ui small white button"} >
+
+            {this.state.compensation_type ? <i class="filter icon"></i> : null}
+            {this.state.compensation_type ? `${this.state.compensation_type} Compensation` : 'Compensation Type'}
+            <Dropdown onChange={this.handleChange}>
+              <Dropdown.Menu>
+                <Dropdown.Menu scrolling>
+                  <Dropdown.Item name='compensation_type' value='Monetary' onClick={this.handleChange}>Monetary</Dropdown.Item>
+                  <Dropdown.Item name='compensation_type' value='Percentage of Crops' onClick={this.handleChange}>Percentage of Crops</Dropdown.Item>
+                  <Dropdown.Item name='compensation_type' value='Hybrid' onClick={this.handleChange}>Hybrid</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown.Menu>
+            </Dropdown>
+        </span>
+
+        {this.state.invalid_address ?<em style={{color: 'red'}}><br/>Please enter a valid location</em> : null}
+
+        <br/>
+        <br/>
+
+        <span class="ui small white button" onClick={this.handleSubmit}>Apply Filters</span>
+
+        <Divider></Divider>
+        <br/>
+
       </div>
 
     )
