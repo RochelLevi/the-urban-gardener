@@ -7,7 +7,7 @@ const ProfileUserInfo = (props) => {
     return (
 
         <div className='ui segment'>
-          <h4> Profile Information</h4>
+          <h3> Profile Information</h3>
           <div class="ui list">
             <div class="item">
               <i class="users icon"></i>

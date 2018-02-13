@@ -47,41 +47,46 @@ class Login extends React.Component {
       </div>
 
     return(
+    <div style={{'padding-top': '5%'}}>
+      <img class="background" style={{position: 'absolute', height: '95%', width: '100%'}} src={require("../css/images/background-image-3.jpg")}></img>
+      <div className="main-content">
+        <div id='welcomeForm' className="ui middle aligned center aligned grid">
 
-    <div className="ui middle aligned center aligned grid">
-      <div class="column">
-        <h2 class="ui image header">
-          <div class="content">
-            Log-in to your account
-          </div>
-        </h2>
-
-        <form onSubmit={this.handleSubmit} class="ui large form">
-          <div class="ui stacked secondary segment">
-
-            {this.props.loginError ? loginError : null }
-
-            <div class="field">
-              <div class="ui left icon input">
-                <i class="mail icon"></i>
-                <input onChange={this.handleChange} type="text" name="email" placeholder="E-mail" value={this.state.fields.username}/>
+          <div class="column">
+            <h2 class="ui image header">
+              <div class="content">
+                Log-in to your account
               </div>
-            </div>
-            <div class="field">
-              <div class="ui left icon input">
-                <i class="lock icon"></i>
-                <input onChange={this.handleChange} type="password" name="password" placeholder="Password" value={this.state.fields.password}/>
+            </h2>
+
+            <form onSubmit={this.handleSubmit} class="ui large form">
+              <div class="ui stacked secondary segment">
+
+                {this.props.loginError ? loginError : null }
+
+                <div class="field">
+                  <div class="ui left icon input">
+                    <i class="mail icon"></i>
+                    <input onChange={this.handleChange} type="text" name="email" placeholder="E-mail" value={this.state.fields.username}/>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="ui left icon input">
+                    <i class="lock icon"></i>
+                    <input onChange={this.handleChange} type="password" name="password" placeholder="Password" value={this.state.fields.password}/>
+                  </div>
+                </div>
+                <button class="ui fluid large black submit button">Login</button>
               </div>
+
+              <div class="ui error message"></div>
+
+            </form>
+
+            <div class="ui message">
+              New to us? <a href="/register">Register</a>
             </div>
-            <button class="ui fluid large black submit button">Login</button>
           </div>
-
-          <div class="ui error message"></div>
-
-        </form>
-
-        <div class="ui message">
-          New to us? <a href="/register">Register</a>
         </div>
       </div>
     </div>

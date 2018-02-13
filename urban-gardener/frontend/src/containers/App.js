@@ -16,9 +16,6 @@ class App extends Component {
     return (
         <div>
           <NavBar/>
-          {// <img class="background" src={require("../css/images/background-image-2.jpg")}></img>
-          }
-          <div className='main-content'>
             <Route exact path='/' component={Profile}/>
             <Route exact path="/login" component={Login}/>
             <Route exact path="/my-profile" component={Profile}/>
@@ -26,7 +23,6 @@ class App extends Component {
             <Route exact path="/messages" component={MailBoxContainer}/>
             <Route exact path="/search-listings" component={ListingsSearchContainer}/>
             <Route exact path="/listings/:id" component={ListingShow}/>
-          </div>
         </div>
       )
     }

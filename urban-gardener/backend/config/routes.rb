@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :listings, only: [:index, :show, :destroy, :create]
     post '/login', to: 'auth#create'
     get '/current_user', to: 'auth#show'
+    get '/fetch_distance', to: 'google_maps#fetch_distance'
   end
 
 end

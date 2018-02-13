@@ -1,6 +1,7 @@
 /* all main content (below navbar) */
 .main-content{
-  padding-top: 6%;
+  padding-top: 8%;
+  padding-bottom: 8%;
 }
 
 
@@ -9,7 +10,12 @@ body > .grid {
   height: 100%;
 }
 
+#welcomeForm {
+  margin-top: 4%;
+}
+
 .column {
   /* padding-top: 50 px; */
+
   max-width: 450px;
 }

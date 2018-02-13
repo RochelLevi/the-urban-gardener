@@ -44,7 +44,7 @@ class ListingsFilterBar extends React.Component {
     const urlRoot = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
     const origin = '59 Carlton Rd, 10952'.replace(' ', '+')
     const key2 = 'AIzaSyBISW6GubT1FZyI10G3-wifH_rm5eQZrdk'
-    const key = 'AIzaSyAtmhQPWxmfXK2E44H1AoZAcMot7smLrMI'
+    const key = 'AIzaSyBaV77LyD0aKXL99HT67TV0uhBH94YE0Lc'
     const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
 
     return fetch(proxyUrl + `${urlRoot}origins=${origin}&destinations=${location}&key=${key}`)
@@ -75,12 +75,7 @@ class ListingsFilterBar extends React.Component {
         })
     } else{
       this.props.filterListings(this.props.listings, this.state)
-      // origin = `${this.props.user.street_address}, ${this.props.user.zip}`
-      // this.props.addLocation(this.props.listings, origin, true, this.state)
     }
-
-    // const origin = this.state.location ? this.state.location : `${this.props.user.street_address}, ${this.props.user.zip}`
-    // this.props.addLocation(this.props.listings, origin, true, this.state)
   }
 
   render(){
@@ -102,7 +97,7 @@ class ListingsFilterBar extends React.Component {
               <Dropdown>
                 <Dropdown.Menu>
                   <Dropdown.Item name='distance_miles' value='.25' onClick={this.handleChange}>1/4 Mile</Dropdown.Item>
-                  <Dropdown.Item name='distance_miles' value='5'onClick={this.handleChange}>1/2 Mile</Dropdown.Item>
+                  <Dropdown.Item name='distance_miles' value='.5'onClick={this.handleChange}>1/2 Mile</Dropdown.Item>
                   <Dropdown.Item name='distance_miles' value='1' onClick={this.handleChange}>1 Mile</Dropdown.Item>
                   <Dropdown.Item name='distance_miles' value='3' onClick={this.handleChange}>3 Mile</Dropdown.Item>
                   <Dropdown.Item name='distance_miles' value='5' onClick={this.handleChange}>5 Mile</Dropdown.Item>

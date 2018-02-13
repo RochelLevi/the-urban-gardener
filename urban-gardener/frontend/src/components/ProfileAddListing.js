@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { Form, Message, Loader } from 'semantic-ui-react'
+import { Form, Message, Loader, Divider } from 'semantic-ui-react'
 import * as actions from '../actions';
 import ImageUploader from 'react-images-upload'
 
@@ -100,8 +100,8 @@ class ProfileAddListing extends React.Component{
 
     return (
 
-        <div className='ui segment'>
-          <h4> Add a Listing </h4>
+        <div>
+    
             <Form error success onSubmit={this.handleSubmit}>
               <Form.Input required fluid value={this.state.title} name='title' label='Title' placeholder='Listing title' onChange={this.handleChange}/>
               <Form.Group >

@@ -40,28 +40,30 @@ class MailBoxContainer extends React.Component{
     })
 
     return(
-      <Container>
-        <h1> Your Conversations</h1>
-        <Divider />
-        {this.props.user.conversations.length ?
-          <Grid>
-            <Grid.Column width={5}>
-              <div class="ui small vertical menu">
-                {conversations}
-              </div>
-            </Grid.Column>
+      <div class='main-content'>
+        <Container>
+          <h1> Your Conversations</h1>
+          <Divider />
+          {this.props.user.conversations.length ?
+            <Grid>
+              <Grid.Column width={5}>
+                <div class="ui small vertical menu">
+                  {conversations}
+                </div>
+              </Grid.Column>
 
-            <Grid.Column stretched width={11}>
-                {this.state.activeItem ?
-                  <Segment>
-                    <Conversation conversation={this.state.activeItem}/>
-                  </Segment> :
-                    null}
+              <Grid.Column stretched width={11}>
+                  {this.state.activeItem ?
+                    <Segment>
+                      <Conversation conversation={this.state.activeItem}/>
+                    </Segment> :
+                      null}
 
-            </Grid.Column>
-          </Grid> : <h4>You have no messages</h4>}
+              </Grid.Column>
+            </Grid> : <h4>You have no messages</h4>}
 
-      </Container>
+        </Container>
+      </div>
     )
   }
 }

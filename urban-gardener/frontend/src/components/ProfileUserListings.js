@@ -24,8 +24,7 @@ const ProfileUserListings = (props) => {
 
     return (
 
-      <div className='ui segment'>
-        <h4> Active Listings </h4>
+      <div>
           <div class="ui relaxed divided list">
             {listings.length ? listings : "You have no active listings."}
           </div>
