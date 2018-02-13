@@ -1,11 +1,6 @@
 /* all main content (below navbar) */
 .main-content{
-  margin-top: 12%;
-
-}
-
-body{
-  background-image: url('./images/background-image-2.jpg')
+  padding-top: 6%;
 }
 
 
@@ -14,11 +9,7 @@ body > .grid {
   height: 100%;
 }
 
-/* .image {
-  margin-top: -100px;
-} */
-
 .column {
-  padding-top: 50 px;
+  /* padding-top: 50 px; */
   max-width: 450px;
 }

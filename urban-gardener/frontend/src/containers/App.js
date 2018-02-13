@@ -16,8 +16,8 @@ class App extends Component {
     return (
         <div>
           <NavBar/>
-          {// <img class="background" src={require("./background-image-2.jpg")}></img>
-        }
+          {// <img class="background" src={require("../css/images/background-image-2.jpg")}></img>
+          }
           <div className='main-content'>
             <Route exact path='/' component={Profile}/>
             <Route exact path="/login" component={Login}/>

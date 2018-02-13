@@ -53,7 +53,7 @@ zips.each do |zip|
     dollar_comp = (comp_type == 'Percentage of Crops') ? 0 : dollar_compensation_amounts.sample
     percent_comp = (comp_type == 'Monetary') ? 0 : percentage_compensation_amounts.sample
     username = Faker::Internet.unique.user_name
-    user = User.create(username: username, email: Faker::Internet.unique.free_email, street_address: address, zip: zip, password: username)
+    user = User.create(username: username, email: "#{username}@#{username}.com", street_address: address, zip: zip, password: "#{username}123")
 
     Listing.create(title: titles.sample, img_url_1: images.sample, img_url_2: images.sample, street_address: address, zip: zip, sunlight_amount: sunlight_amounts.sample, desired_garden_type: desired_garden_types.sample, compensation_type: comp_type, dollar_compensation_amount: dollar_comp, percentage_compensation_amount: percent_comp, user_id: user.id, description: descriptions.sample(100).join(' '))
   end
