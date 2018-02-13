@@ -38,6 +38,14 @@ const userReducer = (state = {listings: [], conversations: []}, action) => {
       const newConversations = state.conversations.slice()
       newConversations.forEach(c => c.id === action.message.conversation_id ? c.messages.push(action.message) : null)
       return Object.assign({}, state, {conversations: newConversations});
+    case 'MARK_MESSAGE_AS_READ':
+      const markedConversations = state.conversations.slice()
+      markedConversations.forEach(conv => {
+        conv.messages.forEach(mess => {
+          mess.id === action.id ? mess.read = true : null
+        })
+      })
+      return Object.assign({}, state, {conversations: markedConversations});
     default:
       return state;
   }
@@ -93,6 +101,7 @@ const registerErrorReducer = (state = {isError: false, errors: []}, action) => {
 const listingsFiltersReducer = (state = {}, action) => {
   switch (action.type) {
     case 'CHANGE_LISTING_FILTER':
+    console.log(Object.assign({}, state, action.filter))
       return Object.assign({}, state, action.filter);
     default:
       return state;

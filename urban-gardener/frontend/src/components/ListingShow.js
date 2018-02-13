@@ -32,11 +32,6 @@ class ListingShow extends React.Component {
     return arr[arr.length - 1]
   }
 
-  // componentDidMount(){
-  //   const listingId = this.getListingId()
-  //   const currListing = this.props.listings.filter(l => l.id === parseInt(listingId))[0]
-  //   this.setState({currListing})
-  // }
 
   componentWillReceiveProps(nextProps){
     if (!this.props.listings.length && nextProps.listings.length) {
@@ -47,7 +42,6 @@ class ListingShow extends React.Component {
   }
 
   render(){
-    console.log(this.state.currListing)
     return(
 
       <div class="ui container">
@@ -56,17 +50,11 @@ class ListingShow extends React.Component {
 
         <br/>
 
-
-
         <div class="ui horizontal segments">
           <div class="ui segment">
-            {  // <img src={this.state.currListing.img_url_1} height='100%' width="100%"></img>
-            }
-              <Image src={this.state.currListing.img_url_1 ? this.state.currListing.img_url_1 : this.state.currListing.avatar} size='large'/>
+            <Image src={this.state.currListing.img_url_1 ? this.state.currListing.img_url_1 : this.state.currListing.avatar} size='large'/>
           </div>
           <div class="ui segment">
-            {// <img src={this.state.currListing.img_url_2} height='100%' width="100%"></img>
-            }
             <Image src={this.state.currListing.img_url_2 ? this.state.currListing.img_url_2 : this.state.currListing.avatar_2} size='large'/>
           </div>
         </div>

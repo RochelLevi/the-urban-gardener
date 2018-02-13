@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { Form, Message } from 'semantic-ui-react'
+import { Form, Message, Loader } from 'semantic-ui-react'
 import * as actions from '../actions';
 import ImageUploader from 'react-images-upload'
 
@@ -25,6 +25,7 @@ class ProfileAddListing extends React.Component{
       avatar: '',
       avatar_2: '',
 
+      loading: false,
       show_message: false
     }
   }
@@ -47,10 +48,13 @@ class ProfileAddListing extends React.Component{
     this.setState({[field]: file, show_message: false})
  }
 
+ componentWillReceiveProps(nextProps){
+   if(nextProps.listingError.isError !== 'not set'){
+     this.setState({show_message: true, loading: false})
+   }
 
-  // onDrop = (e) => {
-  //   this.setState({avatar: e[0], show_message: false})
-  // }
+ }
+
 
   handleSubmit = (e) => {
     e.preventDefault()
@@ -70,8 +74,6 @@ class ProfileAddListing extends React.Component{
     formData.append('avatar_2', this.state.avatar_2)
     formData.append('img_url_1', this.state.img_url_1)
 
-    // formData.forEach(d => console.log(d))
-
     this.props.createListing(formData, this.props.history)
     this.setState({
       title: '',
@@ -85,8 +87,13 @@ class ProfileAddListing extends React.Component{
       description: '',
       avatar: '',
       avatar_2: '',
-      show_message: true
+
+      loading: true
     })
+
+    document.getElementById('files-upload').value = null;
+    document.getElementById('files-upload_2').value = null;
+
   }
 
   render(){
@@ -95,21 +102,21 @@ class ProfileAddListing extends React.Component{
 
         <div className='ui segment'>
           <h4> Add a Listing </h4>
-            <Form error success>
+            <Form error success onSubmit={this.handleSubmit}>
               <Form.Input required fluid value={this.state.title} name='title' label='Title' placeholder='Listing title' onChange={this.handleChange}/>
               <Form.Group >
                 <Form.Input required value={this.state.street_address} name='street_address' label='Street Address' placeholder='Street Address' width={10} onChange={this.handleChange}/>
-                <Form.Input required value={this.state.zip} name='zip' label='Zip Code' placeholder='Zip Code' maxlength="5" width={6} onChange={this.handleChange}/>
+                <Form.Input required type="number" value={this.state.zip} name='zip' label='Zip Code' placeholder='Zip Code' maxlength="5" width={6} onChange={this.handleChange}/>
               </Form.Group>
 
               <br/>
 
               <div class="inline fields">
-                <label>Desired Garden Type</label>
+                <label>Desired Garden Type <span style={{color: 'rgb(217, 43, 48)'}}>*</span></label>
 
                 <div class="field">
                   <div class="ui radio checkbox">
-                    <input type="radio" name='desired_garden_type' value='Vegetable'
+                    <input required type="radio" name='desired_garden_type' value='Vegetable'
                       checked={this.state.desired_garden_type === 'Vegetable'} onChange={this.handleChange}/>
                     <label>Vegetable</label>
                   </div>
@@ -135,11 +142,11 @@ class ProfileAddListing extends React.Component{
 
 
               <div class="inline fields">
-                <label>Daily Hours of Direct Sunlight</label>
+                <label>Daily Hours of Direct Sunlight <span style={{color: 'rgb(217, 43, 48)'}}>*</span></label>
 
                 <div class="field">
                   <div class="ui radio checkbox">
-                    <input type="radio" name='sunlight_amount' value='2-4'
+                    <input required type="radio" name='sunlight_amount' value='2-4'
                       checked={this.state.sunlight_amount === '2-4'} onChange={this.handleChange}/>
                     <label>2-4</label>
                   </div>
@@ -173,11 +180,11 @@ class ProfileAddListing extends React.Component{
 
 
               <div class="inline fields">
-                <label>Compensation Type</label>
+                <label>Compensation Type <span style={{color: 'rgb(217, 43, 48)'}}>*</span></label>
 
                 <div class="field">
                   <div class="ui radio checkbox">
-                    <input type="radio" name='compensation_type' value='Monetary'
+                    <input required type="radio" name='compensation_type' value='Monetary'
                       checked={this.state.compensation_type === 'Monetary'} onChange={this.handleChange}/>
                     <label>Monetary</label>
                   </div>
@@ -203,20 +210,20 @@ class ProfileAddListing extends React.Component{
 
 
               <Form.Group widths={2}>
-                {this.state.compensation_type === 'Monetary' || this.state.compensation_type === 'Hybrid' ? <Form.Input required value={this.state.dollar_compensation_amount} name='dollar_compensation_amount' label='Dollar Compensation Amount' placeholder='$$$$' onChange={this.handleChange}/> : null}
-                {this.state.compensation_type === 'Percentage of Crops' || this.state.compensation_type === 'Hybrid' ?<Form.Input required value={this.state.percentage_compensation_amount} name='percentage_compensation_amount' label='Percentage of Crops Compensation Amount' placeholder='%%%%' onChange={this.handleChange}/> : null}
+                {this.state.compensation_type === 'Monetary' || this.state.compensation_type === 'Hybrid' ? <Form.Input required type="number" value={this.state.dollar_compensation_amount} name='dollar_compensation_amount' label='Dollar Compensation Amount' placeholder='$$$$' onChange={this.handleChange}/> : null}
+                {this.state.compensation_type === 'Percentage of Crops' || this.state.compensation_type === 'Hybrid' ?<Form.Input required type="number" value={this.state.percentage_compensation_amount} name='percentage_compensation_amount' label='Percentage of Crops Compensation Amount' placeholder='%%%%' onChange={this.handleChange}/> : null}
               </Form.Group>
               <Form.TextArea required value={this.state.description} name='description' label='Description' placeholder='Tell us more about your property...' onChange={this.handleChange}/>
 
               <br/>
 
               <label for="image_uploads"><b>Choose an image to upload (PNG, JPG) - this will be your featured image</b></label>
-              <input class="ui field" type='file' name='avatar' onChange={this.onDrop}/>
+              <input id='files-upload' class="ui field" type='file' name='avatar' onChange={this.onDrop}/>
 
               <br/>
               <br/>
               <label for="image_uploads"><b>Choose images to upload (PNG, JPG)</b></label>
-              <input type='file' name='avatar_2' onChange={this.onDrop}/>
+              <input id='files-upload_2' type='file' name='avatar_2' onChange={this.onDrop}/>
             {  // <div style={{'text-align': 'center'}}><b  for="image_uploads">Choose up to two images to upload (PNG, JPG)</b></div>
               // <ImageUploader
               //   withPreview={false}
@@ -234,6 +241,7 @@ class ProfileAddListing extends React.Component{
 
               <br/>
               <br/>
+                {this.state.loading ? <Loader active inline='centered' size='large'>Processing...</Loader> : null}
 
                 {this.state.show_message && !this.props.listingError.errors.length && (this.props.listingError.isError !== 'not set')? <Message
                   success
@@ -251,7 +259,7 @@ class ProfileAddListing extends React.Component{
                 null
               }
 
-              <Form.Button color='black' onClick={this.handleSubmit}>Submit</Form.Button>
+              <Form.Button color='black'>Submit</Form.Button>
             </Form>
 
         </div>

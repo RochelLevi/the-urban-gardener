@@ -52,6 +52,17 @@ const createListing = data => {
   }).then(res => res.json());
 };
 
+const markMessageAsRead = (id) => {
+  const token = localStorage.getItem('token');
+  return fetch(`${API_ROOT}/messages/${id}`, {
+    method: 'PATCH',
+    headers: {
+      Authorization: token
+    },
+    body: JSON.stringify({read: true})
+  }).then(res => res.json());
+};
+
 const createMessage = data => {
   console.log('create message')
   const token = localStorage.getItem('token');
@@ -84,5 +95,6 @@ export const adapter = {
   createListing,
   deleteListing,
   getListings,
-  createMessage
+  createMessage,
+  markMessageAsRead
 };

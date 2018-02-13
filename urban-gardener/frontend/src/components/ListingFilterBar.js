@@ -18,6 +18,28 @@ class ListingsFilterBar extends React.Component {
     }
   }
 
+  componentDidMount(){
+    if(this.props.listings.length){
+      const retrievedFilters = localStorage.getItem('filters')
+      if (retrievedFilters){
+        const parsedFilters = JSON.parse(retrievedFilters)
+        this.setState(parsedFilters, this.handleSubmit)
+        this.setState({retrieved: true})
+      }
+    }
+  }
+
+  componentWillReceiveProps(){
+    if(!this.state.retrieved){
+      const retrievedFilters = localStorage.getItem('filters')
+      if (retrievedFilters){
+        const parsedFilters = JSON.parse(retrievedFilters)
+        this.setState(parsedFilters, this.handleSubmit)
+      }
+    }
+  }
+
+
   validateLocation(location){
     const urlRoot = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
     const origin = '59 Carlton Rd, 10952'.replace(' ', '+')
@@ -37,8 +59,7 @@ class ListingsFilterBar extends React.Component {
     this.setState({[field]: value, invalid_address: false})
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault()
+  handleSubmit = () => {
     this.props.showLoadingBar()
     this.props.changeListingsFilter(this.state)
     let origin;

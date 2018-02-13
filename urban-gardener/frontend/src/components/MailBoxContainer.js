@@ -3,7 +3,7 @@ import '../css/stylesheet.css'
 import withAuth from '../hocs/withAuth';
 import {connect} from 'react-redux'
 import * as actions from '../actions';
-import { Divider, Segment, Container, Form, Grid, Menu} from 'semantic-ui-react'
+import { Divider, Segment, Container, Form, Grid, Menu, Label} from 'semantic-ui-react'
 import Conversation from './Conversation.js'
 
 
@@ -16,19 +16,27 @@ class MailBoxContainer extends React.Component{
   }
 }
 
-  handleItemClick = (e, item) => this.setState({ activeItem: item })
+  handleItemClick = (e, item) => {
+    this.setState({ activeItem: item })
+    item.messages.forEach(m => {
+      m.read ? null : this.props.markMessageAsRead(m.id)
+    })
+  }
 
-  // const this.props.user.converastions[0]s = this.props.user.conversations.map((conversation) => {
-  //   return <Conversation conversation={conversation}/>
-  // })
-
-
+  unreadMessages = (conversation) => {
+    return conversation.messages.filter(mess => {
+      return !mess.read && mess.user_id !== this.props.user.id
+    })
+  }
 
   render(){
-
     const conversations = this.props.user.conversations.map((conversation) => {
       const name = conversation.recipient_name === this.props.user.username ? conversation.sender_name : conversation.recipient_name
-      return <Menu.Item name={name} active={this.state.activeItem === name} onClick={(e) => this.handleItemClick(e, conversation)}/>
+      return <a class="item" active={this.state.activeItem === name} onClick={(e) => this.handleItemClick(e, conversation)}>
+              {this.unreadMessages(conversation).length ? <div class="ui black label"> {this.unreadMessages(conversation).length}</div> : null}
+              {this.unreadMessages(conversation).length ? <b>{name}</b> : name}
+            </a>
+
     })
 
     return(
@@ -37,13 +45,13 @@ class MailBoxContainer extends React.Component{
         <Divider />
 
         <Grid>
-          <Grid.Column width={3}>
-            <Menu fluid vertical tabular>
+          <Grid.Column width={5}>
+            <div class="ui small vertical menu">
               {conversations}
-            </Menu>
+            </div>
           </Grid.Column>
 
-          <Grid.Column stretched width={16}>
+          <Grid.Column stretched width={11}>
               {this.props.user.conversations.length ? null : "You have no messages"}
               {this.state.activeItem ?
                 <Segment>

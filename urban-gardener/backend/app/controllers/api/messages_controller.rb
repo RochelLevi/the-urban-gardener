@@ -9,7 +9,18 @@ class Api::MessagesController < ApplicationController
     end
 
     @message = @conversation.messages.new(message_params)
-    # @message = Message.new(message_params, conversation_id: @conversation.id)
+
+    if @message.save
+      render json: @message
+    else
+      render json: {errors: @message.errors.full_messages}, status: 422
+    end
+  end
+
+
+  def update
+    @message = Message.find(params[:id])
+    @message.update(read: true)
 
     if @message.save
       render json: @message
@@ -22,6 +33,11 @@ class Api::MessagesController < ApplicationController
   def message_params
     params.require(:message).permit(:body, :user_id)
   end
+
+  def message_patch_params
+    params.permit(:read)
+  end
+
 
   def conversation_params
     params.permit(:sender_id, :recipient_id)

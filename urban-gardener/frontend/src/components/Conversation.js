@@ -35,8 +35,9 @@ class Conversation extends React.Component{
 
   render(){
 
+
     const messages = this.props.conversation.messages.map(m =>
-      <Segment>
+      <Segment color={m.user_id === this.props.user.id ? 'black' : 'green'} style={m.user_id === this.props.user.id ? {'text-align': 'right'} : {'text-align': 'left'}} >
         On <em>{m.message_time}</em> {this.props.user.id === m.user_id ? 'you' : this.props.conversation.recipient_name === this.props.user.username ? this.props.conversation.sender_name : this.props.conversation.recipient_name} wrote
         <Divider fitted/>
         {m.body}

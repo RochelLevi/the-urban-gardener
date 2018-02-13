@@ -3,7 +3,7 @@ import {ASYNC_START, SET_CURRENT_USER, LOGOUT_USER, SET_LOGIN_ERROR, REGISTER_NE
     SET_REGISTER_ERROR_TRUE, SET_REGISTER_ERROR_FALSE, DELETE_LISTING, SET_CREATE_LISTING_ERROR_TRUE,
     ADD_LISTING_TO_USER, GET_LISTINGS, CHANGE_LISTING_FILTER, FILTER_LISTINGS,
     UPDATE_FILTERED_LISTINGS_WITH_LOCATION, ADD_MESSAGE_TO_USER, SET_CREATE_MESSAGE_ERROR_TRUE,
-   SET_CREATE_LISTING_ERROR_FALSE} from './types';
+   SET_CREATE_LISTING_ERROR_FALSE, MARK_MESSAGE_AS_READ} from './types';
 
 export const fetchUser = () => dispatch => {
   dispatch({ type: ASYNC_START });
@@ -11,6 +11,13 @@ export const fetchUser = () => dispatch => {
     dispatch({ type: SET_CURRENT_USER, payload: user });
   });
 };
+
+export const markMessageAsRead = (id) => dispatch => {
+  dispatch({ type: ASYNC_START });
+  adapter.markMessageAsRead(id).then(message => {
+    dispatch({ type: MARK_MESSAGE_AS_READ, id: id });
+  });
+}
 
 export const fetchListings = () => dispatch => {
   dispatch({ type: ASYNC_START });
@@ -35,6 +42,7 @@ export const filterListings = (listings, filters) => dispatch => {
 // };
 
 export const changeListingsFilter = (filters) => dispatch => {
+  localStorage.setItem('filters', JSON.stringify(filters));
   dispatch({ type: CHANGE_LISTING_FILTER, filter: filters });
 };
 
@@ -110,5 +118,6 @@ export const createMessage = (data) => dispatch => {
 
 export const logoutUser = () => {
   localStorage.removeItem('token');
+  localStorage.removeItem('filters');
   return { type: LOGOUT_USER };
 };
