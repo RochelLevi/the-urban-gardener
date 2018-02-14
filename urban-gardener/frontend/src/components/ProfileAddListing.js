@@ -224,20 +224,6 @@ class ProfileAddListing extends React.Component{
               <br/>
               <label for="image_uploads"><b>Choose images to upload (PNG, JPG)</b></label>
               <input id='files-upload_2' type='file' name='avatar_2' onChange={this.onDrop}/>
-            {  // <div style={{'text-align': 'center'}}><b  for="image_uploads">Choose up to two images to upload (PNG, JPG)</b></div>
-              // <ImageUploader
-              //   withPreview={false}
-              //   buttonClassName='ui mini black button'
-              //   withIcon={true}
-              //   buttonText='Choose images'
-              //   onChange={this.onDrop}
-              //   label='Max file size: 5mb, accepted: .jpg, .png, .gif'
-              //   imgExtension={['.jpg', '.gif', '.png', '.gif']}
-              //   maxFileSize={5242880}
-              //
-              //  />
-            }
-
 
               <br/>
               <br/>

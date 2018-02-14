@@ -1,6 +1,7 @@
 import React from 'react'
 import '../css/stylesheet.css'
 import {connect} from 'react-redux'
+import { Card, Image, Icon } from 'semantic-ui-react'
 
 
 class ListingCard extends React.Component{
@@ -17,6 +18,25 @@ class ListingCard extends React.Component{
   componentDidMount(){
 
   }
+
+
+  // <Card>
+  //   <Image alt='loading' src={this.props.listing.img_url_1 ? this.props.listing.img_url_1 : this.props.listing.avatar} />
+  //   <Card.Content>
+  //     <Card.Header>  <a href={'/listings/' + this.props.listing.id}> {this.props.listing.title}</a></Card.Header>
+  //     <Card.Description>{this.props.listing.description.slice(0, 100)}...</Card.Description>
+  //     <br/>
+  //     <Card.Meta><Icon name='marker' />{this.props.listing.distance_text ? this.props.listing.distance_text : `${this.props.listing.street_address}, ${this.props.listing.zip}`} </Card.Meta>
+  //   </Card.Content>
+  //   <Card.Content extra>
+  //     <a>
+  //       <Icon name='dollar' />
+  //       {this.props.listing.dollar_compensation_amount}
+  //     </a>
+  //   </Card.Content>
+  // </Card>
+
+
 
   render(){
     return(
@@ -56,6 +76,7 @@ class ListingCard extends React.Component{
         </div>
       </div>
     )
+
   }
 
 }

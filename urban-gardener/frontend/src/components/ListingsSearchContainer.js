@@ -6,7 +6,7 @@ import ListingFilterBar from './ListingFilterBar'
 import {connect} from 'react-redux'
 import { Dimmer, Segment, Loader, Image} from 'semantic-ui-react'
 
-import Map from './Map'
+import MyFancyComponent from './Map'
 
 class ListingsSearchContainer extends React.Component{
 
@@ -75,10 +75,12 @@ class ListingsSearchContainer extends React.Component{
     this.props.listings.map(listing => <ListingCard key={listing.id} listing={listing}/>)
     return(
       <div >
-        <Map user={this.props.user}/>
-      {  // <img alt='' className="background" src={require("../css/images/background-image-3.jpg")}></img>
+    {  // <MyFancyComponent/>
   }
-        <div className="main-content-listing-container">
+
+      <img alt='' className="background" src={require("../css/images/background-image-3.jpg")}></img>
+
+        <div className="main-content">
 
           <div className="ui container">
 

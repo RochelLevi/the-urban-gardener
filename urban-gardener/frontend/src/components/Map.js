@@ -1,6 +1,7 @@
 import React from "react"
 import { compose, withProps } from "recompose"
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+import {connect} from 'react-redux'
 
 const Map = compose(
   withProps({
@@ -11,13 +12,18 @@ const Map = compose(
   }),
   withScriptjs,
   withGoogleMap
-)((props) =>
-  <GoogleMap
+)((props) =>{
+
+'https://maps.googleapis.com/maps/api/geocode/xml?address=${this.props.user.street_address}, ${this.props.user.zip}&key=AIzaSyBISW6GubT1FZyI10G3-wifH_rm5eQZrdk'
+
+  `${this.props.user.street_address}, ${this.props.user.zip}`
+  return (<GoogleMap
     defaultZoom={10}
     defaultCenter={{ lat: -34.397, lng: 150.644 }}
   >
     {props.isMarkerShown && <Marker position={{ lat: -34.397, lng: 150.644 }} onClick={props.onMarkerClick} />}
-  </GoogleMap>
+  </GoogleMap>)
+}
 )
 
 class MyFancyComponent extends React.PureComponent {
@@ -41,6 +47,7 @@ class MyFancyComponent extends React.PureComponent {
   }
 
   render() {
+    console.log('props', this.props)
     return (
       <Map
         isMarkerShown={this.state.isMarkerShown}
@@ -50,4 +57,8 @@ class MyFancyComponent extends React.PureComponent {
   }
 }
 
-export default Map
+const mapStateToProps = (state) => {
+  return {user: state.user, listings: state.listings, filteredListings: state.filteredListings}
+}
+
+export default connect(mapStateToProps, null)(MyFancyComponent)

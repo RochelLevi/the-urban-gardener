@@ -44,8 +44,7 @@ class ListingsFilterBar extends React.Component {
   validateLocation(location){
     const urlRoot = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
     const origin = '59 Carlton Rd, 10952'.replace(' ', '+')
-    const key2 = 'AIzaSyBISW6GubT1FZyI10G3-wifH_rm5eQZrdk'
-    const key = 'AIzaSyBaV77LyD0aKXL99HT67TV0uhBH94YE0Lc'
+    const key = 'AIzaSyBISW6GubT1FZyI10G3-wifH_rm5eQZrdk'
     const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
 
     return fetch(proxyUrl + `${urlRoot}origins=${origin}&destinations=${location}&key=${key}`)
@@ -93,8 +92,6 @@ class ListingsFilterBar extends React.Component {
   }
 
   render(){
-    console.log('state', this.state)
-    console.log('props', this.props)
     return(
       <div>
         <h4>Filter Results</h4>
