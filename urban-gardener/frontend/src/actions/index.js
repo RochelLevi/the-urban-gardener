@@ -42,6 +42,7 @@ export const filterListings = (listings, filters) => dispatch => {
 // };
 
 export const changeListingsFilter = (filters) => dispatch => {
+  console.log('changing filters', filters)
   localStorage.removeItem('filters')
   localStorage.setItem('filters', JSON.stringify(filters));
   dispatch({ type: CHANGE_LISTING_FILTER, filter: filters });

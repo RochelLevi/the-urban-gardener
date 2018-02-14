@@ -23,6 +23,7 @@ class ListingsFilterBar extends React.Component {
       const retrievedFilters = localStorage.getItem('filters')
       if (retrievedFilters){
         const parsedFilters = JSON.parse(retrievedFilters)
+        // console.log('remounting', parsedFilters)
         this.setState(parsedFilters, this.handleSubmit)
         this.setState({retrieved: true})
       }
@@ -30,7 +31,7 @@ class ListingsFilterBar extends React.Component {
   }
 
   componentWillReceiveProps(){
-    if(!this.state.retrieved){
+    if(!this.state.retrieved && this.props.listings.length){
       const retrievedFilters = localStorage.getItem('filters')
       if (retrievedFilters){
         const parsedFilters = JSON.parse(retrievedFilters)
@@ -86,12 +87,14 @@ class ListingsFilterBar extends React.Component {
           }
         })
     } else{
+      console.log('listings being passed', this.props.listings)
       this.props.filterListings(this.props.listings, this.state)
     }
   }
 
   render(){
-
+    console.log('state', this.state)
+    console.log('props', this.props)
     return(
       <div>
         <h4>Filter Results</h4>

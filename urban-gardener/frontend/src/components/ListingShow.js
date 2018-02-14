@@ -63,7 +63,7 @@ class ListingShow extends React.Component {
 
             <br/>
 
-            <Grid columns='equal' divided='true' >
+            <Grid columns='equal' divided >
             <Grid.Row stretched>
               <Grid.Column  >
                   <h4>Description</h4>
