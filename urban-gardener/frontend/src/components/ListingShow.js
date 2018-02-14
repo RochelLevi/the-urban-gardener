@@ -41,6 +41,14 @@ class ListingShow extends React.Component {
     }
   }
 
+  componentDidMount(){
+    if (this.props.listings.length) {
+      const listingId = this.getListingId()
+      const currListing = this.props.listings.filter(l => l.id === parseInt(listingId))[0]
+      this.setState({currListing})
+    }
+  }
+
   render(){
     return(
       <div>
@@ -53,7 +61,7 @@ class ListingShow extends React.Component {
             <br/>
 
             <div className="ui horizontal segments" style={{ background: 'rgb(0,0,0)'}}>
-              <div className="ui segment" style={{ background: 'rgb(0,0,0)', 'background-clip': 'border-box', 'display': 'block', 'margin': 'auto'}}>
+              <div className="ui segment" style={{ background: 'rgb(0,0,0)', 'backgroundClip': 'border-box', 'display': 'block', 'margin': 'auto'}}>
                 <Image alt='' src={this.state.currListing.img_url_1 ? this.state.currListing.img_url_1 : this.state.currListing.avatar} size='large'/>
               </div>
               <div className="ui segment" style={{ background: 'rgb(0,0,0)', 'background-clip': 'border-box', 'display': 'block', 'margin': 'auto'}}>

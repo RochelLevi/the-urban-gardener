@@ -6,6 +6,8 @@ import ListingFilterBar from './ListingFilterBar'
 import {connect} from 'react-redux'
 import { Dimmer, Segment, Loader, Image} from 'semantic-ui-react'
 
+import Map from './Map'
+
 class ListingsSearchContainer extends React.Component{
 
   constructor(){
@@ -67,16 +69,17 @@ class ListingsSearchContainer extends React.Component{
 
 
   render(){
-    console.log('state container', this.state)
-    console.log('props container', this.props)
 
     const listingCards = this.props.filteredListings.filtered ?
     this.props.filteredListings.listings.map(listing => <ListingCard key={listing.id} listing={listing}/>) :
     this.props.listings.map(listing => <ListingCard key={listing.id} listing={listing}/>)
     return(
-      <div>
-        <img alt='' className="background" src={require("../css/images/background-image-3.jpg")}></img>
-        <div className="main-content">
+      <div >
+        <Map user={this.props.user}/>
+      {  // <img alt='' className="background" src={require("../css/images/background-image-3.jpg")}></img>
+  }
+        <div className="main-content-listing-container">
+
           <div className="ui container">
 
 
