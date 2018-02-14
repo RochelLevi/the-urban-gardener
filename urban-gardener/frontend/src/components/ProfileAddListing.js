@@ -1,8 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { Form, Message, Loader, Divider } from 'semantic-ui-react'
+import { Form, Message, Loader} from 'semantic-ui-react'
 import * as actions from '../actions';
-import ImageUploader from 'react-images-upload'
+// import ImageUploader from 'react-images-upload'
 
 
 
@@ -101,37 +101,37 @@ class ProfileAddListing extends React.Component{
     return (
 
         <div>
-    
+
             <Form error success onSubmit={this.handleSubmit}>
               <Form.Input required fluid value={this.state.title} name='title' label='Title' placeholder='Listing title' onChange={this.handleChange}/>
               <Form.Group >
                 <Form.Input required value={this.state.street_address} name='street_address' label='Street Address' placeholder='Street Address' width={10} onChange={this.handleChange}/>
-                <Form.Input required type="number" value={this.state.zip} name='zip' label='Zip Code' placeholder='Zip Code' maxlength="5" width={6} onChange={this.handleChange}/>
+                <Form.Input required type="number" value={this.state.zip} name='zip' label='Zip Code' placeholder='Zip Code' maxLength="5" width={6} onChange={this.handleChange}/>
               </Form.Group>
 
               <br/>
 
-              <div class="inline fields">
+              <div className="inline fields">
                 <label>Desired Garden Type <span style={{color: 'rgb(217, 43, 48)'}}>*</span></label>
 
-                <div class="field">
-                  <div class="ui radio checkbox">
+                <div className="field">
+                  <div className="ui radio checkbox">
                     <input required type="radio" name='desired_garden_type' value='Vegetable'
                       checked={this.state.desired_garden_type === 'Vegetable'} onChange={this.handleChange}/>
                     <label>Vegetable</label>
                   </div>
                 </div>
 
-                <div class="field">
-                  <div class="ui radio checkbox">
+                <div className="field">
+                  <div className="ui radio checkbox">
                     <input type="radio" name='desired_garden_type' value='Herb'
                       checked={this.state.desired_garden_type === 'Herb'} onChange={this.handleChange}/>
                     <label>Herb</label>
                   </div>
                 </div>
 
-                <div class="field">
-                  <div class="ui radio checkbox">
+                <div className="field">
+                  <div className="ui radio checkbox">
                     <input type="radio" name='desired_garden_type' value="Flower"
                     checked={this.state.desired_garden_type === 'Flower'} onChange={this.handleChange}/>
                   <label>Flower</label>
@@ -141,35 +141,35 @@ class ProfileAddListing extends React.Component{
               </div>
 
 
-              <div class="inline fields">
+              <div className="inline fields">
                 <label>Daily Hours of Direct Sunlight <span style={{color: 'rgb(217, 43, 48)'}}>*</span></label>
 
-                <div class="field">
-                  <div class="ui radio checkbox">
+                <div className="field">
+                  <div className="ui radio checkbox">
                     <input required type="radio" name='sunlight_amount' value='2-4'
                       checked={this.state.sunlight_amount === '2-4'} onChange={this.handleChange}/>
                     <label>2-4</label>
                   </div>
                 </div>
 
-                <div class="field">
-                  <div class="ui radio checkbox">
+                <div className="field">
+                  <div className="ui radio checkbox">
                     <input type="radio" name='sunlight_amount' value='4-6'
                       checked={this.state.sunlight_amount === '4-6'} onChange={this.handleChange}/>
                     <label>4-6</label>
                   </div>
                 </div>
 
-                <div class="field">
-                  <div class="ui radio checkbox">
+                <div className="field">
+                  <div className="ui radio checkbox">
                     <input type="radio"name='sunlight_amount' value="6-8"
                     checked={this.state.sunlight_amount === '6-8'} onChange={this.handleChange}/>
                     <label>  6-8</label>
                   </div>
                 </div>
 
-                <div class="field">
-                  <div class="ui radio checkbox">
+                <div className="field">
+                  <div className="ui radio checkbox">
                     <input type="radio" name='sunlight_amount' value="8-10"
                     checked={this.state.sunlight_amount === '8-10'} onChange={this.handleChange}/>
                     <label>  8-10</label>
@@ -179,27 +179,27 @@ class ProfileAddListing extends React.Component{
               </div>
 
 
-              <div class="inline fields">
+              <div className="inline fields">
                 <label>Compensation Type <span style={{color: 'rgb(217, 43, 48)'}}>*</span></label>
 
-                <div class="field">
-                  <div class="ui radio checkbox">
+                <div className="field">
+                  <div className="ui radio checkbox">
                     <input required type="radio" name='compensation_type' value='Monetary'
                       checked={this.state.compensation_type === 'Monetary'} onChange={this.handleChange}/>
                     <label>Monetary</label>
                   </div>
                 </div>
 
-                <div class="field">
-                  <div class="ui radio checkbox">
+                <div className="field">
+                  <div className="ui radio checkbox">
                     <input type="radio" name='compensation_type' value='Percentage of Crops'
                       checked={this.state.compensation_type === 'Percentage of Crops'} onChange={this.handleChange}/>
                     <label>Percentage of Crops</label>
                   </div>
                 </div>
 
-                <div class="field">
-                  <div class="ui radio checkbox">
+                <div className="field">
+                  <div className="ui radio checkbox">
                     <input type="radio" name='compensation_type' value="Hybrid"
                     checked={this.state.compensation_type === 'Hybrid'} onChange={this.handleChange}/>
                   <label>Hybrid</label>
@@ -218,7 +218,7 @@ class ProfileAddListing extends React.Component{
               <br/>
 
               <label for="image_uploads"><b>Choose an image to upload (PNG, JPG) - this will be your featured image</b></label>
-              <input id='files-upload' class="ui field" type='file' name='avatar' onChange={this.onDrop}/>
+              <input id='files-upload' className="ui field" type='file' name='avatar' onChange={this.onDrop}/>
 
               <br/>
               <br/>

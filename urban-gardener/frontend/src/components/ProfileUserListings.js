@@ -11,12 +11,12 @@ const ProfileUserListings = (props) => {
   const listings =
       props.user.listings.map(l => {
         return(
-          <div class="item">
-            <i class="large tag middle aligned icon"></i>
-            <div class="content">
-              <a href={`./listings/${l.id}`} class="header">{l.title}</a>
-              <div class="description">{l.description}</div>
-                <button class="ui mini black button" onClick={() => handleDelete(l.id)}><i class="trash icon"></i>Delete Listing</button>
+          <div className="item">
+            <i className="large tag middle aligned icon"></i>
+            <div className="content">
+              <a href={`./listings/${l.id}`} className="bring-to-front header">{l.title}</a>
+              <div className="description">{l.description}</div>
+                <button className="bring-to-front ui mini black button" onClick={() => handleDelete(l.id)}><i className="trash icon"></i>Delete Listing</button>
             </div>
           </div>
         )
@@ -25,7 +25,7 @@ const ProfileUserListings = (props) => {
     return (
 
       <div>
-          <div class="ui relaxed divided list">
+          <div className="ui relaxed divided list">
             {listings.length ? listings : "You have no active listings."}
           </div>
       </div>

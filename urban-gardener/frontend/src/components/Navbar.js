@@ -11,7 +11,7 @@ class Navbar extends Component {
 
   componentDidMount() {
     if (localStorage.getItem('token')) {
-      this.props.fetchUser;
+      this.props.fetchUser();
     } else {
       this.setState({ authCompleted: true });
     }
@@ -36,12 +36,12 @@ class Navbar extends Component {
   render(){
     this.unreadMessages()
     return (
-      <div class="ui top fixed menu">
-        <NavLink to="/" className="item"><img className='icon' src={require("../css/images/carrot-icon-3.png")}></img></NavLink>
+      <div className="ui top fixed menu">
+        <NavLink to="/" className="item"><img alt='' className='icon' src={require("../css/images/001-herb.png")}></img></NavLink>
         <NavLink className="item" to="/my-profile" className="item">Profile</NavLink>
         <NavLink className="item" to="/search-listings" className="item">Search Listings</NavLink>
         <NavLink className="item" to="/messages" className="item">{this.unreadMessages().length ? <b>{`Messages (${this.unreadMessages().length})`}</b> : 'Messages' }</NavLink>
-        <div class="right menu">
+        <div className="right menu">
           {this.props.loggedIn ? <a className="item" onClick={this.props.logoutUser}>Logout</a> :
           <NavLink className="item" to="/login" className="item">Login</NavLink>}
         </div>

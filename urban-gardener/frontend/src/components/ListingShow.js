@@ -3,7 +3,7 @@ import '../css/stylesheet.css'
 import withAuth from '../hocs/withAuth';
 import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux'
-import { Form, Image, Message, Grid } from 'semantic-ui-react'
+import { Form, Image, Message, Grid, Loader } from 'semantic-ui-react'
 
 class ListingShow extends React.Component {
 
@@ -43,94 +43,98 @@ class ListingShow extends React.Component {
 
   render(){
     return(
+      <div>
+        <img alt='' className="background" src={require("../css/images/background-image-3.jpg")}></img>
+        <div className="main-content">
+          <div className="ui container">
 
-      <div class="ui container">
+            <h1>{this.state.currListing.title} </h1>
 
-        <h1>{this.state.currListing.title} </h1>
+            <br/>
 
-        <br/>
+            <div className="ui horizontal segments" style={{ background: 'rgb(0,0,0)'}}>
+              <div className="ui segment" style={{ background: 'rgb(0,0,0)', 'background-clip': 'border-box', 'display': 'block', 'margin': 'auto'}}>
+                <Image alt='' src={this.state.currListing.img_url_1 ? this.state.currListing.img_url_1 : this.state.currListing.avatar} size='large'/>
+              </div>
+              <div className="ui segment" style={{ background: 'rgb(0,0,0)', 'background-clip': 'border-box', 'display': 'block', 'margin': 'auto'}}>
+                <Image alt='' src={this.state.currListing.img_url_2 ? this.state.currListing.img_url_2 : this.state.currListing.avatar_2} size='large'/>
+              </div>
+            </div>
 
-        <div class="ui horizontal segments">
-          <div class="ui segment">
-            <Image src={this.state.currListing.img_url_1 ? this.state.currListing.img_url_1 : this.state.currListing.avatar} size='large'/>
-          </div>
-          <div class="ui segment">
-            <Image src={this.state.currListing.img_url_2 ? this.state.currListing.img_url_2 : this.state.currListing.avatar_2} size='large'/>
+            <br/>
+
+            <Grid columns='equal' divided='true' >
+            <Grid.Row stretched>
+              <Grid.Column  >
+                  <h4>Description</h4>
+                  <p>{this.state.currListing.description}</p>
+              </Grid.Column>
+
+              <Grid.Column>
+                  <h4> More Information</h4>
+                  <div className="ui list">
+                    <div className="item">
+                      <i className="marker icon"></i>
+                      <div className="content">
+                        Location: {this.state.currListing.street_address}, {this.state.currListing.zip}
+                      </div>
+                    </div>
+                    <div className="item">
+                      <i className="dollar icon"></i>
+                      <div className="content">
+                        Desired Compensation: ${this.state.currListing.dollar_compensation_amount}
+                      </div>
+                    </div>
+                    <div className="item">
+                      <i className="percent icon"></i>
+                      <div className="content">
+                         Desired Compensation: {this.state.currListing.percentage_compensation_amount}% of Crops
+                      </div>
+                    </div>
+                    <div className="item">
+                      <i className="sun icon"></i>
+                      <div className="content">
+                        {this.state.currListing.sunlight_amount} daily hours of direct sun exposure
+                      </div>
+                    </div>
+                    <div className="item">
+                      <i className="leaf icon"></i>
+                      <div className="content">
+                        Desired Garden Type: {this.state.currListing.desired_garden_type}
+                      </div>
+                    </div>
+                  </div>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+
+              <div className='ui segment'>
+                <h4>Message Seller</h4>
+                <Form error success>
+                  <Form.TextArea required label='Body' value={this.state.message} onChange={this.handleChange} placeholder='Please enter your message' />
+
+                    {this.state.show_message && !this.props.messageError.isError ? <Message
+                      success
+                      header='Success!'
+                      content="Your Message Has Been Sent"
+                    /> :
+                    null
+                    }
+
+                    {this.state.show_message && this.props.messageError.isError === true ?  <Message
+                      error
+                      header='Please Fix the Following Error(s) and Try Again'
+                      content={this.props.messageError.errors.map(e => <li>{e}</li>)}
+                    /> :
+                    null
+                  }
+
+                  <Form.Button color='black' onClick={this.handleSubmit}>Send</Form.Button>
+                </Form>
+              </div>
+
           </div>
         </div>
-
-        <br/>
-
-        <Grid columns='equal' divided='true' >
-        <Grid.Row stretched>
-          <Grid.Column  >
-              <h4>Description</h4>
-              <p>{this.state.currListing.description}</p>
-          </Grid.Column>
-
-          <Grid.Column>
-              <h4> More Information</h4>
-              <div class="ui list">
-                <div class="item">
-                  <i class="marker icon"></i>
-                  <div class="content">
-                    Location: {this.state.currListing.street_address}, {this.state.currListing.zip}
-                  </div>
-                </div>
-                <div class="item">
-                  <i class="dollar icon"></i>
-                  <div class="content">
-                    Desired Compensation: ${this.state.currListing.dollar_compensation_amount}
-                  </div>
-                </div>
-                <div class="item">
-                  <i class="percent icon"></i>
-                  <div class="content">
-                     Desired Compensation: {this.state.currListing.percentage_compensation_amount}% of Crops
-                  </div>
-                </div>
-                <div class="item">
-                  <i class="sun icon"></i>
-                  <div class="content">
-                    {this.state.currListing.sunlight_amount} daily hours of direct sun exposure
-                  </div>
-                </div>
-                <div class="item">
-                  <i class="leaf icon"></i>
-                  <div class="content">
-                    Desired Garden Type: {this.state.currListing.desired_garden_type}
-                  </div>
-                </div>
-              </div>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-
-          <div className='ui segment'>
-            <h4>Message Seller</h4>
-            <Form error success>
-              <Form.TextArea required label='Body' value={this.state.message} onChange={this.handleChange} placeholder='Please enter your message' />
-
-                {this.state.show_message && !this.props.messageError.isError ? <Message
-                  success
-                  header='Success!'
-                  content="Your Message Has Been Sent"
-                /> :
-                null
-                }
-
-                {this.state.show_message && this.props.messageError.isError ?  <Message
-                  error
-                  header='Please Fix the Following Error(s) and Try Again'
-                  content={this.props.messageError.errors.map(e => <li>{e}</li>)}
-                /> :
-                null
-              }
-
-              <Form.Button color='black' onClick={this.handleSubmit}>Send</Form.Button>
-            </Form>
-          </div>
-
       </div>
     )
   }

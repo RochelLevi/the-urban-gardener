@@ -32,37 +32,40 @@ class MailBoxContainer extends React.Component{
   render(){
     const conversations = this.props.user.conversations.map((conversation) => {
       const name = conversation.recipient_name === this.props.user.username ? conversation.sender_name : conversation.recipient_name
-      return <a class="item" active={this.state.activeItem === name} onClick={(e) => this.handleItemClick(e, conversation)}>
-              {this.unreadMessages(conversation).length ? <div class="ui black label"> {this.unreadMessages(conversation).length}</div> : null}
+      return <a className="item" active={`${this.state.activeItem === name}`} onClick={(e) => this.handleItemClick(e, conversation)}>
+              {this.unreadMessages(conversation).length ? <div className="ui black label"> {this.unreadMessages(conversation).length}</div> : null}
               {this.unreadMessages(conversation).length ? <b>{name}</b> : name}
             </a>
 
     })
 
     return(
-      <div class='main-content'>
-        <Container>
-          <h1> Your Conversations</h1>
-          <Divider />
-          {this.props.user.conversations.length ?
-            <Grid>
-              <Grid.Column width={5}>
-                <div class="ui small vertical menu">
-                  {conversations}
-                </div>
-              </Grid.Column>
+      <div>
+        <img alt='' className="background" src={require("../css/images/background-image-3.jpg")}></img>
+        <div className='main-content'>
+          <Container>
+            <h1> Your Conversations</h1>
+            <Divider />
+            {this.props.user.conversations.length ?
+              <Grid>
+                <Grid.Column width={5}>
+                  <div className="ui small vertical menu">
+                    {conversations}
+                  </div>
+                </Grid.Column>
 
-              <Grid.Column stretched width={11}>
-                  {this.state.activeItem ?
-                    <Segment>
-                      <Conversation conversation={this.state.activeItem}/>
-                    </Segment> :
-                      null}
+                <Grid.Column stretched width={11}>
+                    {this.state.activeItem ?
+                      <Segment>
+                        <Conversation conversation={this.state.activeItem}/>
+                      </Segment> :
+                        null}
 
-              </Grid.Column>
-            </Grid> : <h4>You have no messages</h4>}
+                </Grid.Column>
+              </Grid> : <h4>You have no messages</h4>}
 
-        </Container>
+          </Container>
+        </div>
       </div>
     )
   }

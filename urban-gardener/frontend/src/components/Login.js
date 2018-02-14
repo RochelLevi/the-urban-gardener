@@ -39,51 +39,53 @@ class Login extends React.Component {
   render(){
 
     const loginError =
-      <div class="ui red message">
-        <div classname="ui error message">
-          <i classname="close icon"></i>
-          <div classname="header">Your credentials are invalid. Please try again.</div>
+      <div className="ui red message">
+        <div className="ui error message">
+          <i className="close icon"></i>
+          <div className="header">Your credentials are invalid. Please try again.</div>
         </div>
       </div>
 
     return(
     <div style={{'padding-top': '5%'}}>
-      <img class="background" style={{position: 'absolute', height: '95%', width: '100%'}} src={require("../css/images/background-image-3.jpg")}></img>
+      <img className="background-login" src={require("../css/images/background-image-3.jpg")}></img>
       <div className="main-content">
         <div id='welcomeForm' className="ui middle aligned center aligned grid">
 
-          <div class="column">
-            <h2 class="ui image header">
-              <div class="content">
-                Log-in to your account
-              </div>
-            </h2>
+          <div className="column">
 
-            <form onSubmit={this.handleSubmit} class="ui large form">
-              <div class="ui stacked secondary segment">
+            <form onSubmit={this.handleSubmit} className="ui large form">
+              <div className="ui stacked secondary segment">
+
+                <h2 className="ui image header">
+                  <div className="content">
+                    Log-in to your account
+                  </div>
+                </h2>
+
 
                 {this.props.loginError ? loginError : null }
 
-                <div class="field">
-                  <div class="ui left icon input">
-                    <i class="mail icon"></i>
+                <div className="field">
+                  <div className="ui left icon input">
+                    <i className="mail icon"></i>
                     <input onChange={this.handleChange} type="text" name="email" placeholder="E-mail" value={this.state.fields.username}/>
                   </div>
                 </div>
-                <div class="field">
-                  <div class="ui left icon input">
-                    <i class="lock icon"></i>
+                <div className="field">
+                  <div className="ui left icon input">
+                    <i className="lock icon"></i>
                     <input onChange={this.handleChange} type="password" name="password" placeholder="Password" value={this.state.fields.password}/>
                   </div>
                 </div>
-                <button class="ui fluid large black submit button">Login</button>
+                <button className="ui fluid large black submit button">Login</button>
               </div>
 
-              <div class="ui error message"></div>
+              <div className="ui error message"></div>
 
             </form>
 
-            <div class="ui message">
+            <div className="ui message">
               New to us? <a href="/register">Register</a>
             </div>
           </div>

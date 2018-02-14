@@ -2,7 +2,7 @@ import React from 'react'
 import '../css/stylesheet.css'
 import {connect} from 'react-redux'
 import * as actions from '../actions';
-import { Divider, Dropdown, Input} from 'semantic-ui-react'
+import { Divider, Dropdown, Input, Button} from 'semantic-ui-react'
 
 class ListingsFilterBar extends React.Component {
 
@@ -59,6 +59,18 @@ class ListingsFilterBar extends React.Component {
     this.setState({[field]: value, invalid_address: false})
   }
 
+  handleClear = () => {
+    this.setState({
+      location: '',
+      distance_miles: '',
+      compensation_type: '',
+      garden_type: '',
+      invalid_address: false
+    })
+
+    this.handleSubmit()
+  }
+
   handleSubmit = () => {
     this.props.showLoadingBar()
     this.props.changeListingsFilter(this.state)
@@ -90,9 +102,9 @@ class ListingsFilterBar extends React.Component {
           <span>{' '}</span>
 
           {this.state.location ?
-            <span class={this.state.distance_miles ?  "ui small black button"  : "ui small white button"} >
+            <span className={this.state.distance_miles ?  "bring-to-front ui small black button"  : "bring-to-front ui small white button"} >
 
-              {this.state.distance_miles ? <i class="filter icon"></i> : null}
+              {this.state.distance_miles ? <i className="filter icon"></i> : null}
               {this.state.distance_miles ? `Within ${this.state.distance_miles} Miles` : 'Distance'}
               <Dropdown>
                 <Dropdown.Menu>
@@ -107,9 +119,9 @@ class ListingsFilterBar extends React.Component {
             </span> : null}
 
 
-            <span class={this.state.garden_type ?  "ui small black button"  : "ui small white button"} >
+            <span className={this.state.garden_type ?  "bring-to-front ui small black button"  : "bring-to-front ui small white button"} >
 
-              {this.state.garden_type ? <i class="filter icon"></i> : null}
+              {this.state.garden_type ? <i className="filter icon"></i> : null}
               {this.state.garden_type ? `${this.state.garden_type} Garden` : 'Garden Type'}
               <Dropdown onChange={this.handleChange}>
                 <Dropdown.Menu>
@@ -122,13 +134,13 @@ class ListingsFilterBar extends React.Component {
               </Dropdown>
           </span>
 
-          <span class={this.state.compensation_type ?  "ui small black button"  : "ui small white button"} >
+          <span className={this.state.compensation_type ?  "bring-to-front ui small black button"  : "bring-to-front ui small white button"} >
 
-            {this.state.compensation_type ? <i class="filter icon"></i> : null}
+            {this.state.compensation_type ? <i className="filter icon"></i> : null}
             {this.state.compensation_type ? `${this.state.compensation_type} Compensation` : 'Compensation Type'}
-            <Dropdown onChange={this.handleChange}>
+            <Dropdown onChange={this.handleChange} >
               <Dropdown.Menu>
-                <Dropdown.Menu scrolling>
+                <Dropdown.Menu  scrolling>
                   <Dropdown.Item name='compensation_type' value='Monetary' onClick={this.handleChange}>Monetary</Dropdown.Item>
                   <Dropdown.Item name='compensation_type' value='Percentage of Crops' onClick={this.handleChange}>Percentage of Crops</Dropdown.Item>
                   <Dropdown.Item name='compensation_type' value='Hybrid' onClick={this.handleChange}>Hybrid</Dropdown.Item>
@@ -142,7 +154,8 @@ class ListingsFilterBar extends React.Component {
         <br/>
         <br/>
 
-        <span class="ui small white button" onClick={this.handleSubmit}>Apply Filters</span>
+        <Button className='bring-to-front' onClick={this.handleSubmit}>Apply Filters</Button>
+        <Button className='bring-to-front' onClick={this.handleClear}>Clear Filters</Button>
 
         <Divider></Divider>
         <br/>

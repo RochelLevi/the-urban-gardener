@@ -4,7 +4,6 @@
   padding-bottom: 8%;
 }
 
-
 /* login and register pages */
 body > .grid {
   height: 100%;
@@ -15,7 +14,32 @@ body > .grid {
 }
 
 .column {
-  /* padding-top: 50 px; */
-
   max-width: 450px;
+}
+
+/* background photo */
+.background{
+  opacity: .2;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+}
+
+.background-login{
+  opacity: .5;
+  position: fixed;
+  height: 95%;
+  width: 100%;
+}
+
+.background-register{
+  opacity: .5;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+}
+
+.bring-to-front{
+  position: relative;
+  z-index: 4;
 }

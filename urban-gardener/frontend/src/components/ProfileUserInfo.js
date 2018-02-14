@@ -8,22 +8,22 @@ const ProfileUserInfo = (props) => {
 
         <div className='ui segment'>
           <h3> Profile Information</h3>
-          <div class="ui list">
-            <div class="item">
-              <i class="users icon"></i>
-              <div class="content">
+          <div className="ui list">
+            <div className="item">
+              <i className="users icon"></i>
+              <div className="content">
                 {props.user.username}
               </div>
             </div>
-            <div class="item">
-              <i class="marker icon"></i>
-              <div class="content">
+            <div className="item">
+              <i className="marker icon"></i>
+              <div className="content">
                 {props.user.street_address + ', ' + props.user.zip}
               </div>
             </div>
-            <div class="item">
-              <i class="mail icon"></i>
-              <div class="content">
+            <div className="item">
+              <i className="mail icon"></i>
+              <div className="content">
                 <a>{props.user.email}</a>
               </div>
             </div>

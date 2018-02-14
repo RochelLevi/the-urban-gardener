@@ -1,5 +1,5 @@
 import { adapter } from '../services';
-import {ASYNC_START, SET_CURRENT_USER, LOGOUT_USER, SET_LOGIN_ERROR, REGISTER_NEW_USER,
+import {ASYNC_START, SET_CURRENT_USER, LOGOUT_USER, SET_LOGIN_ERROR,
     SET_REGISTER_ERROR_TRUE, SET_REGISTER_ERROR_FALSE, DELETE_LISTING, SET_CREATE_LISTING_ERROR_TRUE,
     ADD_LISTING_TO_USER, GET_LISTINGS, CHANGE_LISTING_FILTER, FILTER_LISTINGS,
     UPDATE_FILTERED_LISTINGS_WITH_LOCATION, ADD_MESSAGE_TO_USER, SET_CREATE_MESSAGE_ERROR_TRUE,
@@ -42,6 +42,7 @@ export const filterListings = (listings, filters) => dispatch => {
 // };
 
 export const changeListingsFilter = (filters) => dispatch => {
+  localStorage.removeItem('filters')
   localStorage.setItem('filters', JSON.stringify(filters));
   dispatch({ type: CHANGE_LISTING_FILTER, filter: filters });
 };

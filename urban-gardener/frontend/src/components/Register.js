@@ -38,11 +38,11 @@ class Register extends React.Component {
 
 
       const backendErrors =
-        <div class="ui red message">
-          <div classname="ui error message">
-            <i classname="close icon"></i>
-            <div classname="header">Please Fix Error(s) Below</div>
-            <ul classname="list">
+        <div className="ui red message">
+          <div className="ui error message">
+            <i className="close icon"></i>
+            <div className="header">Please Fix Error(s) Below</div>
+            <ul className="list">
               {this.props.registerError.errors.map(error => <li>{error}</li>).concat(' ')}
             </ul>
           </div>
@@ -50,59 +50,60 @@ class Register extends React.Component {
 
     return(
       <div>
-        <img class="background" style={{position: 'absolute', height: '100%', width: '100%'}} src={require("../css/images/background-image-3.jpg")}></img>
+        <img alt='' className="background-register" src={require("../css/images/background-image-3.jpg")}></img>
         <div className="main-content">
-            <div id='welcomeForm' class="ui middle aligned center aligned grid">
-              <div class="column">
+            <div id='welcomeForm' className="ui middle aligned center aligned grid">
+              <div className="column">
 
-                <h2 class="ui image header">
-                  <div class="content">
-                    Register For An Account
-                  </div>
-                </h2>
+                <form className="ui large form" onSubmit={this.handleSubmit}>
 
+                  <div className="ui stacked secondary segment">
 
-                <form class="ui large form" onSubmit={this.handleSubmit}>
-                  <div class="ui stacked secondary segment">
+                    <h2 className="ui image header">
+                      <div className="content">
+                        Register For An Account
+                      </div>
+                    </h2>
+
 
                     {this.props.registerError.isError && this.state.showError ? backendErrors : null}
 
-                    <div class="field">
-                      <div class="ui left icon input">
-                        <i class="mail icon"></i>
+                    <div className="field">
+                      <div className="ui left icon input">
+                        <i className="mail icon"></i>
                         <input required type="email" name="email" placeholder="E-mail" value={this.state.email} onChange={this.handleChange} onBlur={this.handleBlur}/>
                       </div>
                     </div>
 
-                    <div class="field">
-                      <div class="ui left icon input">
-                        <i class="user icon"></i>
+                    <div className="field">
+                      <div className="ui left icon input">
+                        <i className="user icon"></i>
                         <input required type="text" name="username" placeholder="Username" value={this.state.username} onChange={this.handleChange} onBlur={this.handleBlur}/>
                       </div>
                     </div>
 
-                    <div class="field">
-                      <div class="ui left icon input">
-                        <i class="lock icon"></i>
+                    <div className="field">
+                      <div className="ui left icon input">
+                        <i className="lock icon"></i>
                         <input required type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} onBlur={this.handleBlur}/>
                       </div>
                     </div>
 
-                    <div class="field">
-                      <div class="ui left icon input">
-                        <i class="home icon"></i>
+                    <div className="field">
+                      <div className="ui left icon input">
+                        <i className="home icon"></i>
                         <input required type="text" name="streetAddress" placeholder="Street Adddress" value={this.state.streetAddress} onChange={this.handleChange} onBlur={this.handleBlur}/>
                       </div>
                     </div>
 
 
-                  <div class="field">
-                    <div class="ui left icon input">
-                      <i class="marker icon"></i>
+                  <div className="field">
+                    <div className="ui left icon input">
+                      <i className="marker icon"></i>
                       <input required type="number" name="zipCode" placeholder="Zip Code" value={this.state.zipCode} onChange={this.handleChange} onBlur={this.handleBlur}/>
                     </div>
                   </div>
-                  <button class="ui fluid large black submit button">Register</button>
+                  <button className="ui fluid large black submit button">Register</button>
                 </div>
 
                 </form>

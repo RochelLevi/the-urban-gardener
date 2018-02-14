@@ -51,7 +51,7 @@ class Conversation extends React.Component{
         <Divider/>
         <Form>
           <Form.TextArea value={this.state.message} onChange={this.handleChange} label='Message' placeholder='Please enter your message' />
-          <Form.Button onClick={this.handleSubmit} size="mini" color='black'><i class="send icon"></i>Send</Form.Button>
+          <Form.Button onClick={this.handleSubmit} size="mini" color='black'><i className="send icon"></i>Send</Form.Button>
         </Form>
       </div>
     )
@@ -60,7 +60,7 @@ class Conversation extends React.Component{
       <div>
         <h3>Your Conversation With {this.props.conversation.recipient_name === this.props.user.username ? this.props.conversation.sender_name : this.props.conversation.recipient_name}</h3>
         { messages }
-        <button class="ui mini black button" onClick={this.handleShow}><i class="reply icon"></i>Reply</button>
+        <button className="ui mini black button" onClick={this.handleShow}><i className="reply icon"></i>Reply</button>
         {this.state.show ? replyForm : null}
       </div>
 

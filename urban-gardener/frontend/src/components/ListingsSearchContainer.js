@@ -17,7 +17,7 @@ class ListingsSearchContainer extends React.Component{
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState({loading: false})
+    nextProps.listings.length ? this.setState({loading: false}) : null
   }
 
   showLoadingBar = () => {
@@ -63,17 +63,15 @@ class ListingsSearchContainer extends React.Component{
   // }
 
   addDistanceToListings = (listings, inputOrigin, filters=[]) => {
-    console.log('adding location')
     const origin = inputOrigin.replace(/[\s]+/g, '+')
     const urlRoot = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
-    const key = 'AIzaSyBaV77LyD0aKXL99HT67TV0uhBH94YE0Lc'
+    const key = 'AIzaSyBISW6GubT1FZyI10G3-wifH_rm5eQZrdk'
     const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
     const METER_TO_MILE = 0.000621371
     const listingsWithDistance = []
 
 
     listings.forEach((l) => {
-      console.log('adding location')
       const destination = `${l.street_address}, ${l.zip}`.replace(/[\s]+/g, '+')
       const apiRoute = `${urlRoot}origins=${origin}&destinations=${destination}&key=${key}&units=imperial&mode=walking`
       fetch(proxyUrl + apiRoute)
@@ -104,25 +102,28 @@ class ListingsSearchContainer extends React.Component{
 
   render(){
     const listingCards = this.props.filteredListings.filtered ?
-    this.props.filteredListings.listings.map(listing => <ListingCard listing={listing}/>) :
-    this.props.listings.map(listing => <ListingCard listing={listing}/>)
+    this.props.filteredListings.listings.map(listing => <ListingCard key={listing.id} listing={listing}/>) :
+    this.props.listings.map(listing => <ListingCard key={listing.id} listing={listing}/>)
     return(
-      <div className="main-content">
-        <div class="ui container">
+      <div>
+        <img alt='' className="background" src={require("../css/images/background-image-3.jpg")}></img>
+        <div className="main-content">
+          <div className="ui container">
 
 
-          <ListingFilterBar showLoadingBar={this.showLoadingBar} hideLoadingBar={this.hideLoadingBar} addLocation={this.addDistanceToListings}/>
+            <ListingFilterBar showLoadingBar={this.showLoadingBar} hideLoadingBar={this.hideLoadingBar} addLocation={this.addDistanceToListings}/>
 
-          <br/>
+            <br/>
 
-          {this.state.loading && !this.state.filteredListings ? <Loader active inline='centered' size='large'>Loading</Loader> :
-            <div>
-              {listingCards.length ? null : <h3> Sorry, no listings matched your search</h3>}
-              <div class="ui link cards">
-                {listingCards}
+            {this.state.loading && !this.state.filteredListings ? <Loader active inline='centered' size='large'>Loading</Loader> :
+              <div>
+                {listingCards.length ? null : <h3> Sorry, no listings matched your search</h3>}
+                <div className="ui link cards">
+                  {listingCards}
+                </div>
               </div>
-            </div>
-          }
+            }
+          </div>
         </div>
       </div>
     )

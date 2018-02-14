@@ -20,37 +20,37 @@ class ListingCard extends React.Component{
 
   render(){
     return(
-      <div class="card">
-        <a class="image" href={'/listings/' + this.props.listing.id}>
-          <img src={this.props.listing.img_url_1 ? this.props.listing.img_url_1 : this.props.listing.avatar}></img>
+      <div className="card">
+        <a className="image" href={'/listings/' + this.props.listing.id}>
+          <img alt='loading' src={this.props.listing.img_url_1 ? this.props.listing.img_url_1 : this.props.listing.avatar}></img>
         </a>
 
-        <div class="content">
+        <div className="content">
 
-          <a class="header" href={'/listings/' + this.props.listing.id}> {this.props.listing.title}</a>
+          <a className="header" href={'/listings/' + this.props.listing.id}> {this.props.listing.title}</a>
 
-          <div class="description">
+          <div className="description">
             {this.props.listing.description.slice(0, 100)}...
           </div>
 
 
           <br/>
 
-          <div class="meta">
-            <span> <i class="marker icon"></i> {this.props.listing.distance_text ? this.props.listing.distance_text : `${this.props.listing.street_address}, ${this.props.listing.zip}`} </span>
+          <div className="meta">
+            <span> <i className="marker icon"></i> {this.props.listing.distance_text ? this.props.listing.distance_text : `${this.props.listing.street_address}, ${this.props.listing.zip}`} </span>
           </div>
         </div>
 
 
-        <div class="extra content">
+        <div className="extra content">
           <span >
-            <i class="dollar icon"></i>
+            <i className="dollar icon"></i>
             {this.props.listing.dollar_compensation_amount}
           </span>
 
-          <span class="right floated">
+          <span className="right floated">
             {this.props.listing.percentage_compensation_amount}
-            <i class="percent icon"></i>
+            <i className="percent icon"></i>
              of Crops
           </span>
         </div>
