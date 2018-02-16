@@ -24,7 +24,7 @@ const ProfileUserListings = (props) => {
 
     return (
 
-      <div>
+      <div className='bring-to-front'>
           <div className="ui relaxed divided list">
             {listings.length ? listings : "You have no active listings."}
           </div>

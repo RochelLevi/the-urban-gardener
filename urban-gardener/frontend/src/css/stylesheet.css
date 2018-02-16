@@ -26,21 +26,20 @@ body > .grid {
 
 /* background photo */
 .background{
-  opacity: .2;
   position: fixed;
   height: 100%;
   width: 100%;
 }
 
 .background-login{
-  opacity: .5;
+  opacity: .3;
   position: fixed;
   height: 95%;
   width: 100%;
 }
 
 .background-register{
-  opacity: .5;
+  opacity: .3;
   position: fixed;
   height: 100%;
   width: 100%;

@@ -2,7 +2,7 @@ import React from 'react'
 import '../css/stylesheet.css'
 import {connect} from 'react-redux'
 import * as actions from '../actions';
-import { Divider, Dropdown, Input, Button} from 'semantic-ui-react'
+import { Divider, Dropdown, Input, Button, Segment} from 'semantic-ui-react'
 
 class ListingsFilterBar extends React.Component {
 
@@ -66,9 +66,7 @@ class ListingsFilterBar extends React.Component {
       compensation_type: '',
       garden_type: '',
       invalid_address: false
-    })
-
-    this.handleSubmit()
+    }, this.handleSubmit)
   }
 
   handleSubmit = () => {
@@ -93,9 +91,9 @@ class ListingsFilterBar extends React.Component {
 
   render(){
     return(
-      <div>
+      <div className='bring-to-front' >
         <h4>Filter Results</h4>
-        <Divider></Divider>
+        <Divider ></Divider>
 
           <Input value={this.state.location} onChange={this.handleChange} name="location" size="small" icon='search' iconPosition='left' className='search' placeholder="Search by Location" />
 

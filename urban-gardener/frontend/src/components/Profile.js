@@ -24,14 +24,14 @@ class Profile extends React.Component{
   render(){
     return (
       <div>
-        <img alt='' className="background" src={require("../css/images/background-image-3.jpg")}></img>
+        <img alt='' className="background" src={"https://static.pexels.com/photos/606540/pexels-photo-606540.jpeg"}></img>
         <div className='main-content'>
           <div className="ui container">
             <h3> Welcome, {this.props.user.username}</h3>
 
             <ProfileUserInfo/>
 
-            <Accordion fluid styled>
+            <Accordion className='bring-to-front' fluid styled>
               <Accordion.Title active='true'  onClick={() => this.setState({showActiveListings: !this.state.showActiveListings})}>
                 <h4> <Icon name='dropdown'/> Active Listings </h4>
               </Accordion.Title>
@@ -42,7 +42,7 @@ class Profile extends React.Component{
 
             <br/>
 
-             <Accordion fluid styled>
+             <Accordion className='bring-to-front' fluid styled>
                <Accordion.Title active='true'  onClick={() => this.setState({showAddListing: !this.state.showAddListing})}>
                  <h4> <Icon name='dropdown' />Add a Listing </h4>
                </Accordion.Title>

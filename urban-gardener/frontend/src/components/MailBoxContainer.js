@@ -41,11 +41,19 @@ class MailBoxContainer extends React.Component{
 
     return(
       <div>
-        <img alt='' className="background" src={require("../css/images/background-image-3.jpg")}></img>
-        <div className='main-content'>
+        <img alt='' className="background" src={"https://static.pexels.com/photos/606540/pexels-photo-606540.jpeg"}></img>
+        <br/><br/>
+        <br/><br/>
+        <br/><br/>
+        <br/><br/>
+      <Container >
+      <Segment compact>
+        <div className='main-content bring-to-front'>
           <Container>
+
             <h1> Your Conversations</h1>
             <Divider />
+            <br/><br/>
             {this.props.user.conversations.length ?
               <Grid>
                 <Grid.Column width={5}>
@@ -66,6 +74,8 @@ class MailBoxContainer extends React.Component{
 
           </Container>
         </div>
+        </Segment>
+        </Container>
       </div>
     )
   }

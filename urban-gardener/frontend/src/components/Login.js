@@ -47,8 +47,8 @@ class Login extends React.Component {
       </div>
 
     return(
-    <div style={{'padding-top': '5%'}}>
-      <img className="background-login" src={require("../css/images/background-image-3.jpg")}></img>
+    <div style={{'padding-top': '2.5%'}}>
+        <img alt='' className="background" src={"https://static.pexels.com/photos/606540/pexels-photo-606540.jpeg"}></img>
       <div className="main-content">
         <div id='welcomeForm' className="ui middle aligned center aligned grid">
 

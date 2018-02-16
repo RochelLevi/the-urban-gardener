@@ -3,7 +3,7 @@ import '../css/stylesheet.css'
 import withAuth from '../hocs/withAuth';
 import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux'
-import { Form, Image, Message, Grid, Loader } from 'semantic-ui-react'
+import { Form, Image, Message, Grid, Loader, Segment } from 'semantic-ui-react'
 
 class ListingShow extends React.Component {
 
@@ -52,7 +52,7 @@ class ListingShow extends React.Component {
   render(){
     return(
       <div>
-        <img alt='' className="background" src={require("../css/images/background-image-3.jpg")}></img>
+          <img alt='' className="background" src={"https://static.pexels.com/photos/606540/pexels-photo-606540.jpeg"}></img>
         <div className="main-content">
           <div className="ui container">
 
@@ -71,14 +71,18 @@ class ListingShow extends React.Component {
 
             <br/>
 
+          <Segment>
             <Grid columns='equal' divided >
             <Grid.Row stretched>
               <Grid.Column  >
+
                   <h4>Description</h4>
                   <p>{this.state.currListing.description}</p>
+
               </Grid.Column>
 
               <Grid.Column>
+
                   <h4> More Information</h4>
                   <div className="ui list">
                     <div className="item">
@@ -112,9 +116,11 @@ class ListingShow extends React.Component {
                       </div>
                     </div>
                   </div>
+
               </Grid.Column>
             </Grid.Row>
           </Grid>
+          </Segment>
 
               <div className='ui segment'>
                 <h4>Message Seller</h4>

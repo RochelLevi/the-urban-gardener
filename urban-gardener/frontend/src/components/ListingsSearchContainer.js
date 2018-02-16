@@ -78,14 +78,15 @@ class ListingsSearchContainer extends React.Component{
     {  // <MyFancyComponent/>
   }
 
-      <img alt='' className="background" src={require("../css/images/background-image-3.jpg")}></img>
+      <img alt='' className="background" src={"https://static.pexels.com/photos/606540/pexels-photo-606540.jpeg"}></img>
 
         <div className="main-content">
 
-          <div className="ui container">
+          <div style={{'padding-right': '18.7%', 'padding-left': '18%'}}>
 
-
+            <Segment>
             <ListingFilterBar showLoadingBar={this.showLoadingBar} hideLoadingBar={this.hideLoadingBar} addLocation={this.addDistanceToListings}/>
+            </Segment>
 
             <br/>
 

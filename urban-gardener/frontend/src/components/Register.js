@@ -38,7 +38,7 @@ class Register extends React.Component {
 
 
       const backendErrors =
-        <div className="ui red message">
+        <div className="bring-to-front ui red message">
           <div className="ui error message">
             <i className="close icon"></i>
             <div className="header">Please Fix Error(s) Below</div>
@@ -50,7 +50,7 @@ class Register extends React.Component {
 
     return(
       <div>
-        <img alt='' className="background-register" src={require("../css/images/background-image-3.jpg")}></img>
+          <img alt='' className="background" src={"https://static.pexels.com/photos/606540/pexels-photo-606540.jpeg"}></img>
         <div className="main-content">
             <div id='welcomeForm' className="ui middle aligned center aligned grid">
               <div className="column">
