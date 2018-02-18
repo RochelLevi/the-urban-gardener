@@ -1,4 +1,4 @@
-# the-urban-gardener
+# TheUrbanGardener
 
 # Setup
 
